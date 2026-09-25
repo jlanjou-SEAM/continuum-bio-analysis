@@ -179,7 +179,7 @@ All endpoints return CORS headers for cross-origin requests:
 
 ## Frontend Integration
 
-The server works with **seam-ui-improved.html**:
+The server works with **continuum-bio-analysis.html**:
 
 ```html
 <!-- Open UI in browser -->
@@ -321,5 +321,5 @@ Lock: `62c6aa75effef85b9039251fd7fd2dae7e11b676e861f71ac7892f33a1bd85e4`
 **Next Steps:**
 1. `./BUILD.sh` (or `BUILD.bat` on Windows)
 2. `./seam-server`
-3. Open `seam-ui-improved.html` in your browser
+3. Open `continuum-bio-analysis.html` in your browser
 4. Select compounds and analyze!

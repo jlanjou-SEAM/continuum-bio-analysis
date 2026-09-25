@@ -48,7 +48,7 @@ Building SEAM C Server
 
 ## 3. Open the Frontend
 
-Open **`seam-ui-improved.html`** in your browser:
+Open **`continuum-bio-analysis.html`** in your browser:
 - Click the folder button to open the compound selector
 - Search for compounds (e.g., "Famot", "Ibupro", "Vitamin")
 - Select multiple compounds (checkboxes)
@@ -105,7 +105,7 @@ curl http://localhost:5000/results/task_1
 ```
 ┌─────────────────────────┐
 │ Browser                 │
-│ seam-ui-improved.html   │
+│ continuum-bio-analysis.html   │
 │ ├─ Compound selector    │
 │ ├─ Result display       │
 │ └─ Progress bar         │
@@ -185,7 +185,7 @@ The `load_compounds()` function in `seam-server.c` only has 5 demo compounds. To
 ### Browser shows "CORS error"
 Frontend must be served over HTTP (not `file://`). Options:
 1. Use VS Code Live Server extension
-2. Python: `python3 -m http.server 8080` (then visit `http://localhost:8080/seam-ui-improved.html`)
+2. Python: `python3 -m http.server 8080` (then visit `http://localhost:8080/continuum-bio-analysis.html`)
 3. Node: `npx http-server`
 
 ## Next Steps
@@ -256,7 +256,7 @@ ssh deploy@myserver systemctl restart seam-server
 | `SEAM_C_SERVER_README.md` | Full documentation |
 | `MIGRATION_PYTHON_TO_C.md` | Python → C migration guide |
 | `QUICKSTART_C.md` | This file |
-| `seam-ui-improved.html` | Web frontend |
+| `continuum-bio-analysis.html` | Web frontend |
 
 ## Support
 

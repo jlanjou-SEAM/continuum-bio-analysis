@@ -7,7 +7,7 @@ Complete this checklist to verify your SEAM analyzer is ready for production.
 ### Source Code
 - [ ] `seam-server-enhanced.c` exists (main C server, loads 306 compounds)
 - [ ] `seam-server.c` exists (optional minimal version)
-- [ ] `seam-ui-improved.html` exists (frontend)
+- [ ] `continuum-bio-analysis.html` exists (frontend)
 - [ ] `SEAM_common_drugs_supplements_choice_registry_v1.json` exists (306 compounds)
 
 ### Build Scripts
@@ -114,7 +114,7 @@ curl -X OPTIONS http://localhost:5000/analyze \
 ## Frontend Testing
 
 ### Local File (file://)
-- [ ] Open `seam-ui-improved.html` directly in browser
+- [ ] Open `continuum-bio-analysis.html` directly in browser
 - [ ] Note: CORS may not work with `file://` protocol
 - [ ] Expect error: "Failed to fetch"
 
@@ -131,7 +131,7 @@ npx http-server
 php -S localhost:8080
 ```
 
-Then open: `http://localhost:8080/seam-ui-improved.html`
+Then open: `http://localhost:8080/continuum-bio-analysis.html`
 
 - [ ] Page loads without CORS errors
 - [ ] Compound selector modal works

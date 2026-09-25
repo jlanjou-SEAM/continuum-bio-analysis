@@ -26,7 +26,7 @@ This guide shows why and how to switch from the Python HTTP server to the minima
 
 ✓ **Same async task handling** — Progress polling works identically
 
-✓ **Same frontend** — `seam-ui-improved.html` works with both
+✓ **Same frontend** — `continuum-bio-analysis.html` works with both
 
 ## What's Different?
 
@@ -116,7 +116,7 @@ curl http://localhost:5000/health
 
 ## Step 3: Frontend (No Changes!)
 
-Your `seam-ui-improved.html` works exactly as-is:
+Your `continuum-bio-analysis.html` works exactly as-is:
 ```javascript
 // No changes needed
 const api = 'http://localhost:5000';
@@ -210,7 +210,7 @@ curl http://localhost:5000/health
 ### Full workflow test
 1. Start C server: `./seam-server`
 2. Open: `http://localhost:5000/health` (verify response)
-3. Open: `seam-ui-improved.html` in browser
+3. Open: `continuum-bio-analysis.html` in browser
 4. Select compounds, click "Analyze"
 5. Watch progress bar (polling `/results/task_id`)
 6. See results
@@ -330,4 +330,4 @@ A: No, they both want port 5000. Kill Python first.
 1. `./BUILD.sh` (or `BUILD.bat`)
 2. `./seam-server`
 3. Test: `curl http://localhost:5000/health`
-4. Open `seam-ui-improved.html` — it just works!
+4. Open `continuum-bio-analysis.html` — it just works!

@@ -25,7 +25,7 @@ Continuum Bio Analysis uses the SEAM (Structural Perturbation Analysis Engine) v
 ## Architecture
 
 ### Frontend
-- **seam-ui-improved.html**: Single-page web interface with dynamic selection and results display
+- **continuum-bio-analysis.html**: Single-page web interface with dynamic selection and results display
 - Technologies: HTML5, CSS3, JavaScript (Vanilla)
 - No external dependencies required
 
@@ -83,16 +83,16 @@ make clean    # Clean artifacts
 2. **Open the frontend:**
 ```bash
 # Windows
-start seam-ui-improved.html
+start continuum-bio-analysis.html
 
 # macOS
-open seam-ui-improved.html
+open continuum-bio-analysis.html
 
 # Linux
-xdg-open seam-ui-improved.html
+xdg-open continuum-bio-analysis.html
 ```
 
-Or open in browser: `file:///D:/bio/seam-ui-improved.html` (adjust path as needed)
+Or open in browser: `file:///D:/bio/continuum-bio-analysis.html` (adjust path as needed)
 
 ## Usage
 
@@ -202,7 +202,7 @@ This tool is for educational and research purposes only. It does not provide med
 ```
 .
 ├── README.md
-├── seam-ui-improved.html          # Frontend interface
+├── continuum-bio-analysis.html          # Frontend interface
 ├── seam-server-v3.py               # Backend API server
 ├── SEAM_common_drugs_supplements_choice_registry_v1.json
 ├── conditions_database.json

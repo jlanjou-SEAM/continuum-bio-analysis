@@ -17,7 +17,7 @@ All files included in this implementation of the SEAM compound analyzer with zer
 
 | File | Size | Purpose |
 |------|------|---------|
-| `seam-ui-improved.html` | ~35 KB | Modern dark-theme UI with modal compound selector |
+| `continuum-bio-analysis.html` | ~35 KB | Modern dark-theme UI with modal compound selector |
 
 ### 📊 Data
 
@@ -57,7 +57,7 @@ seam-analyzer/
 │   └── BUILD.bat                    (Windows build)
 │
 ├── Frontend
-│   └── seam-ui-improved.html        (web UI)
+│   └── continuum-bio-analysis.html        (web UI)
 │
 ├── Data
 │   └── SEAM_common_drugs_supplements_choice_registry_v1.json
@@ -111,11 +111,11 @@ curl http://localhost:5000/compounds | jq '.count'
 ### Open Frontend
 ```bash
 # In browser
-file:///path/to/seam/seam-ui-improved.html
+file:///path/to/seam/continuum-bio-analysis.html
 
 # Or via HTTP server (to avoid CORS issues)
 python3 -m http.server 8080
-# Then: http://localhost:8080/seam-ui-improved.html
+# Then: http://localhost:8080/continuum-bio-analysis.html
 ```
 
 ## 🔐 Lock Verification
@@ -135,7 +135,7 @@ python3 -m http.server 8080
 ```
 User Browser
     ↓
-seam-ui-improved.html
+continuum-bio-analysis.html
     ↓ HTTP (CORS)
     ↓
 seam-server (compiled from .c)
@@ -328,7 +328,7 @@ See **DEPLOY_SETUP.md** → "Security Notes"
 1. **Build:** `./BUILD.sh enhanced`
 2. **Run:** `./seam-server`
 3. **Test:** `curl http://localhost:5000/health`
-4. **Open:** `seam-ui-improved.html` in browser
+4. **Open:** `continuum-bio-analysis.html` in browser
 5. **Deploy:** Follow `DEPLOY_SETUP.md`
 
 **All set!** You have a production-ready SEAM analyzer with zero external dependencies.

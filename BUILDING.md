@@ -146,7 +146,7 @@ continuum-bio-analysis/
 ├── seam-server.c                # Minimal demo source (5 compounds)
 ├── seam-server-windows.c        # Windows-specific variant
 ├── BUILD.sh                      # Build script
-├── seam-ui-improved.html         # Frontend
+├── continuum-bio-analysis.html         # Frontend
 ├── SEAM_common_drugs_supplements_choice_registry_v1.json
 ├── conditions_database.json
 └── structure_database.json
@@ -206,7 +206,7 @@ Expected output:
 ```
 
 Then open the frontend:
-https://jlanjou-SEAM.github.io/continuum-bio-analysis/seam-ui-improved.html
+https://jlanjou-SEAM.github.io/continuum-bio-analysis/continuum-bio-analysis.html
 
 ## Performance
 

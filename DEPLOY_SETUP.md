@@ -23,7 +23,7 @@ Ensure these files are present:
 /path/to/seam/
 ├── seam-server-enhanced.c        (loads 306 compounds)
 ├── seam-server.c                 (optional: minimal hardcoded)
-├── seam-ui-improved.html         (frontend)
+├── continuum-bio-analysis.html         (frontend)
 ├── BUILD.sh                       (Unix build script)
 ├── BUILD.bat                      (Windows build script)
 └── SEAM_common_drugs_supplements_choice_registry_v1.json
@@ -101,8 +101,8 @@ curl http://localhost:5000/results/task_1
 
 ### 5. Run Frontend
 
-Open **seam-ui-improved.html** in a web browser:
-- `file:///path/to/seam/seam-ui-improved.html`
+Open **continuum-bio-analysis.html** in a web browser:
+- `file:///path/to/seam/continuum-bio-analysis.html`
 
 Or use a local web server:
 ```bash
@@ -116,7 +116,7 @@ npx http-server
 # Right-click HTML → "Open with Live Server"
 ```
 
-Then visit: `http://localhost:8080/seam-ui-improved.html`
+Then visit: `http://localhost:8080/continuum-bio-analysis.html`
 
 ## Production Deployment
 
@@ -133,7 +133,7 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /build/seam-server .
 COPY SEAM_common_drugs_supplements_choice_registry_v1.json .
-COPY seam-ui-improved.html .
+COPY continuum-bio-analysis.html .
 EXPOSE 5000
 CMD ["./seam-server"]
 ```

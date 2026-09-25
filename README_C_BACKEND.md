@@ -9,7 +9,7 @@ Complete, production-ready HTTP server for the SEAM structural perturbation anal
 │  SEAM Analyzer Architecture                 │
 ├─────────────────────────────────────────────┤
 │                                             │
-│  Frontend: seam-ui-improved.html            │
+│  Frontend: continuum-bio-analysis.html            │
 │  (modern dark UI, compound selector)        │
 │          ↓ HTTP (CORS)                      │
 │  Backend: seam-server (C binary)            │
@@ -66,9 +66,9 @@ curl http://localhost:5000/health
 curl http://localhost:5000/compounds | jq '.count'
 
 # Open frontend
-open seam-ui-improved.html  # macOS
-xdg-open seam-ui-improved.html  # Linux
-start seam-ui-improved.html  # Windows
+open continuum-bio-analysis.html  # macOS
+xdg-open continuum-bio-analysis.html  # Linux
+start continuum-bio-analysis.html  # Windows
 ```
 
 ## Files Included
@@ -78,7 +78,7 @@ start seam-ui-improved.html  # Windows
 |------|---------|
 | `seam-server-enhanced.c` | **Main** — Loads 306 compounds from JSON |
 | `seam-server.c` | Minimal demo (5 hardcoded compounds) |
-| `seam-ui-improved.html` | Frontend with compound selector |
+| `continuum-bio-analysis.html` | Frontend with compound selector |
 
 ### Build Scripts
 | File | Purpose |
@@ -306,7 +306,7 @@ jq . SEAM_common_drugs_supplements_choice_registry_v1.json
 ### CORS/Fetch Errors in Browser
 - Ensure frontend is served via HTTP, not `file://`
 - Try: `python3 -m http.server 8080`
-- Then open: `http://localhost:8080/seam-ui-improved.html`
+- Then open: `http://localhost:8080/continuum-bio-analysis.html`
 
 ## Migrating from Python
 
