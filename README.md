@@ -208,6 +208,12 @@ MIT License - See LICENSE file for details
 
 Created with Claude Code - Structural perturbation analysis for precision health insights
 
+## License
+
+**Proprietary — All Rights Reserved**
+
+Public availability of this repository does not constitute an open-source license or authorization for third-party reuse.
+
 ---
 
 **Last Updated**: 2026-09-24
