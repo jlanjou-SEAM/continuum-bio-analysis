@@ -30,10 +30,12 @@ Continuum Bio Analysis uses the SEAM (Structural Perturbation Analysis Engine) v
 - No external dependencies required
 
 ### Backend
-- **seam-server-v3.py**: Python HTTP server with comparative analysis
-- Built-in HTTP server (no Flask/Django required)
+- **seam-server-enhanced.c**: Minimal C HTTP server (production)
+- Zero external dependencies (C stdlib + pthreads only)
+- Loads 306 compounds from JSON at startup
 - Thread-safe async task processing
 - CORS enabled for cross-origin requests
+- ~200KB binary, <10ms startup
 
 ### Data
 - **SEAM_common_drugs_supplements_choice_registry_v1.json**: 338 compounds database
@@ -43,23 +45,33 @@ Continuum Bio Analysis uses the SEAM (Structural Perturbation Analysis Engine) v
 ## Getting Started
 
 ### Requirements
-- Python 3.6+
+- **C Compiler** (gcc, clang) — for production C backend
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/continuum-bio-analysis.git
+git clone https://github.com/jlanjou-SEAM/continuum-bio-analysis.git
 cd continuum-bio-analysis
 ```
 
-### Running
+### Building & Running
 
-1. **Start the backend server:**
+#### Production: C Backend (Recommended)
 ```bash
-python seam-server-v3.py
+# Build (enhanced version loads 306 compounds)
+chmod +x BUILD.sh
+./BUILD.sh enhanced
+
+# Run
+./seam-server
 ```
 Server runs on `http://localhost:5000`
+
+**Platform Support:**
+- Linux: `gcc seam-server-enhanced.c -o seam-server -lpthread`
+- macOS: `gcc seam-server-enhanced.c -o seam-server -lpthread`
+- Windows: Use MinGW or WSL2
 
 2. **Open the frontend:**
 ```bash
