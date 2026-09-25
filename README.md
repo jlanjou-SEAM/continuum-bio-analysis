@@ -57,21 +57,28 @@ cd continuum-bio-analysis
 
 ### Building & Running
 
-#### Production: C Backend (Recommended)
+#### Quick Build (3 commands)
 ```bash
-# Build (enhanced version loads 306 compounds)
 chmod +x BUILD.sh
 ./BUILD.sh enhanced
-
-# Run
 ./seam-server
 ```
-Server runs on `http://localhost:5000`
+
+**For detailed build instructions**, see **[BUILDING.md](BUILDING.md)**
+
+Server runs on `http://localhost:5000` with 306 compounds loaded from JSON.
+
+**Using Make:**
+```bash
+make          # Build production version
+make run      # Build and run
+make minimal  # Build demo version
+make clean    # Clean artifacts
+```
 
 **Platform Support:**
-- Linux: `gcc seam-server-enhanced.c -o seam-server -lpthread`
-- macOS: `gcc seam-server-enhanced.c -o seam-server -lpthread`
-- Windows: Use MinGW or WSL2
+- Linux/macOS: `./BUILD.sh enhanced` or `make`
+- Windows: MinGW, WSL2, or MSVC (see BUILDING.md)
 
 2. **Open the frontend:**
 ```bash
