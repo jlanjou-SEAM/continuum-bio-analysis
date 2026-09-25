@@ -24,20 +24,29 @@ Continuum Bio Analysis uses the SEAM (Structural Perturbation Analysis Engine) v
 
 ## Architecture
 
-### Frontend
+### Frontend (Public)
 - **continuum-bio-analysis.html**: Single-page web interface with dynamic selection and results display
 - Technologies: HTML5, CSS3, JavaScript (Vanilla)
 - No external dependencies required
+- Calls backend API at `${SEAM_BIO_API_URL}` (configurable, defaults to `http://localhost:5000`)
 
-### Backend
+### Backend (Private)
+⚠️ **The SEAM backend has been moved to a private repository** ([seam-private-engines](https://github.com/jlanjou-SEAM/seam-private-engines)) to protect proprietary IP.
+
 - **seam-server-enhanced.c**: Minimal C HTTP server (production)
+- **seam-backend-enhanced.py**: Python backend (Flask alternative)
 - Zero external dependencies (C stdlib + pthreads only)
 - Loads 306 compounds from JSON at startup
 - Thread-safe async task processing
-- CORS enabled for cross-origin requests
+- CORS enabled for authenticated cross-origin requests
 - ~200KB binary, <10ms startup
 
-### Data
+**To run the backend locally:**
+1. Clone the private repo: `git clone https://github.com/jlanjou-SEAM/seam-private-engines.git`
+2. Build and run the server (see `seam-private-engines/bio-analysis/README.md`)
+3. Set `SEAM_BIO_API_URL` in your browser or deployment to point to your server
+
+### Data (Public)
 - **SEAM_common_drugs_supplements_choice_registry_v1.json**: 338 compounds database
 - **conditions_database.json**: 55 medical conditions with structural impact profiles
 - **structure_database.json**: Compound-to-structure mapping
@@ -55,44 +64,61 @@ git clone https://github.com/jlanjou-SEAM/continuum-bio-analysis.git
 cd continuum-bio-analysis
 ```
 
-### Building & Running
+### Running the Frontend
 
-#### Quick Build (3 commands)
+**Option 1: Use a Published Backend (Recommended)**
+
+If you have access to a deployed SEAM backend:
 ```bash
-chmod +x BUILD.sh
-./BUILD.sh enhanced
-./seam-server
-```
+# Set environment variable to your backend URL
+export SEAM_BIO_API_URL="https://your-backend.example.com"
 
-**For detailed build instructions**, see **[BUILDING.md](BUILDING.md)**
-
-Server runs on `http://localhost:5000` with 306 compounds loaded from JSON.
-
-**Using Make:**
-```bash
-make          # Build production version
-make run      # Build and run
-make minimal  # Build demo version
-make clean    # Clean artifacts
-```
-
-**Platform Support:**
-- Linux/macOS: `./BUILD.sh enhanced` or `make`
-- Windows: MinGW, WSL2, or MSVC (see BUILDING.md)
-
-2. **Open the frontend:**
-```bash
-# Windows
-start continuum-bio-analysis.html
-
-# macOS
+# Open the frontend
 open continuum-bio-analysis.html
-
-# Linux
-xdg-open continuum-bio-analysis.html
 ```
 
-Or open in browser: `file:///D:/bio/continuum-bio-analysis.html` (adjust path as needed)
+**Option 2: Run Backend Locally**
+
+To run the backend locally for development/testing:
+
+1. Clone the private engine repository:
+   ```bash
+   git clone https://github.com/jlanjou-SEAM/seam-private-engines.git
+   cd seam-private-engines/bio-analysis
+   ```
+
+2. Build and run the server:
+   ```bash
+   # Linux/macOS
+   ./BUILD.sh enhanced
+   ./seam-server
+
+   # Windows
+   BUILD.bat enhanced
+   ./seam-server.exe
+   ```
+
+   Or use Python backend:
+   ```bash
+   pip install -r requirements.txt
+   python seam-backend-enhanced.py
+   ```
+
+3. Open the frontend in your browser:
+   ```bash
+   # Windows
+   start continuum-bio-analysis.html
+
+   # macOS
+   open continuum-bio-analysis.html
+
+   # Linux
+   xdg-open continuum-bio-analysis.html
+   ```
+
+   Or open directly: `file:///path/to/continuum-bio-analysis.html`
+
+The frontend will automatically detect the local backend at `http://localhost:5000`
 
 ## Usage
 
@@ -201,13 +227,16 @@ This tool is for educational and research purposes only. It does not provide med
 
 ```
 .
-├── README.md
-├── continuum-bio-analysis.html          # Frontend interface
-├── seam-server-v3.py               # Backend API server
+├── README.md                            # This file
+├── PUBLISHED_SITE.md                    # GitHub Pages publication
+├── continuum-bio-analysis.html          # Frontend interface (only public file needed to run)
 ├── SEAM_common_drugs_supplements_choice_registry_v1.json
 ├── conditions_database.json
 ├── structure_database.json
-└── conditions_database_old.json    # Backup
+├── drug_compounds.json
+└── index.html                           # GitHub Pages redirect
+
+Backend files have been moved to: https://github.com/jlanjou-SEAM/seam-private-engines/tree/main/bio-analysis
 ```
 
 ## Contributing
