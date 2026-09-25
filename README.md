@@ -219,13 +219,10 @@ Contributions welcome! Areas for expansion:
 - Performance optimizations
 - Clinical outcome data integration
 
-## License
-
-MIT License - See LICENSE file for details
 
 ## Author
 
-Created with Claude Code - Structural perturbation analysis for precision health insights
+Jason Palmer
 
 ## License
 
