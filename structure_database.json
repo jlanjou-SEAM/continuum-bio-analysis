@@ -1,0 +1,140 @@
+{
+  "compound_structures": {
+    "Acetaminophen": [
+      {
+        "structure": "hepatobiliary alkaline-phosphatase production/release structure",
+        "new_breaks": 28,
+        "relations": 861,
+        "criticality": "MODERATE"
+      },
+      {
+        "structure": "hepatocyte immune-inflammatory and metabolic integrity structure",
+        "new_breaks": 18,
+        "relations": 666,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+        "new_breaks": 12,
+        "relations": 703,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "renal proximal-tubule epithelial cell transport and barrier structure",
+        "new_breaks": 9,
+        "relations": 528,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "musculoskeletal mechanical-integrity and repair structure",
+        "new_breaks": 5,
+        "relations": 406,
+        "criticality": "MINOR"
+      }
+    ],
+    "Famotidine": [
+      {
+        "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+        "new_breaks": 38,
+        "relations": 703,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "gastric acid secretion and pH regulation structure",
+        "new_breaks": 24,
+        "relations": 512,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "renal proximal-tubule epithelial cell transport and barrier structure",
+        "new_breaks": 15,
+        "relations": 528,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "enteric neuromuscular coordination and motility structure",
+        "new_breaks": 8,
+        "relations": 445,
+        "criticality": "MINOR"
+      }
+    ],
+    "Ibuprofen": [
+      {
+        "structure": "renal glomerular filtration and podocyte structure",
+        "new_breaks": 42,
+        "relations": 580,
+        "criticality": "MODERATE"
+      },
+      {
+        "structure": "gastric mucosal protection and epithelial barrier structure",
+        "new_breaks": 35,
+        "relations": 612,
+        "criticality": "MODERATE"
+      },
+      {
+        "structure": "platelet production, activation, adhesion, and aggregation structure",
+        "new_breaks": 18,
+        "relations": 435,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "cardiac rhythm-to-cerebral-perfusion continuity structure",
+        "new_breaks": 14,
+        "relations": 780,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "arterial-lumen blood-flow and thrombotic-hemostasis structure",
+        "new_breaks": 8,
+        "relations": 650,
+        "criticality": "MINOR"
+      }
+    ],
+    "Aspirin": [
+      {
+        "structure": "platelet production, activation, adhesion, and aggregation structure",
+        "new_breaks": 52,
+        "relations": 435,
+        "criticality": "MODERATE"
+      },
+      {
+        "structure": "arterial-lumen blood-flow and thrombotic-hemostasis structure",
+        "new_breaks": 31,
+        "relations": 650,
+        "criticality": "MODERATE"
+      },
+      {
+        "structure": "gastric mucosal protection and epithelial barrier structure",
+        "new_breaks": 22,
+        "relations": 612,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "renal glomerular filtration and podocyte structure",
+        "new_breaks": 14,
+        "relations": 580,
+        "criticality": "MINOR"
+      }
+    ],
+    "_default": [
+      {
+        "structure": "hepatocyte immune-inflammatory and metabolic integrity structure",
+        "new_breaks": 24,
+        "relations": 666,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+        "new_breaks": 18,
+        "relations": 703,
+        "criticality": "MINOR"
+      },
+      {
+        "structure": "renal proximal-tubule epithelial cell transport and barrier structure",
+        "new_breaks": 12,
+        "relations": 528,
+        "criticality": "MINOR"
+      }
+    ]
+  }
+}

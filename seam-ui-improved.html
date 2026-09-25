@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continuum Bio Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 24px;
+            min-height: 600px;
+        }
+
+        /* Left Panel - Selected Compounds */
+        .left-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-panel h2 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .selection-section {
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--bg-tertiary);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            cursor: pointer;
+            background: var(--bg-secondary);
+            font-weight: 600;
+            font-size: 13px;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .section-header:hover {
+            background: var(--primary);
+        }
+
+        .section-content {
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            padding: 8px;
+        }
+
+        .section-content.open {
+            display: block;
+        }
+
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .section-item {
+            padding: 6px 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .section-item:hover {
+            border-color: var(--primary);
+            background: var(--bg-secondary);
+        }
+
+        .section-item.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .selected-compounds-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+
+        .compound-tag {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .compound-tag .remove {
+            cursor: pointer;
+            margin-left: 8px;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        .compound-tag .remove:hover {
+            opacity: 1;
+        }
+
+        .empty-state {
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .left-panel-footer {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+        }
+
+        /* Right Panel - Results */
+        .right-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .right-panel h2 {
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .results-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .placeholder {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .placeholder p {
+            margin-bottom: 8px;
+        }
+
+        .result-item {
+            padding: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .result-name {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            color: var(--text-secondary);
+        }
+
+        .detail {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            font-size: 11px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--text-secondary);
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        /* Quick Search */
+        .quick-search {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .category-tab {
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .category-tab:hover {
+            border-color: var(--primary);
+        }
+
+        .category-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Compound Grid */
+        .compound-grid {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .compound-item {
+            padding: 10px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .compound-item:hover {
+            border-color: var(--primary);
+            background: var(--bg-tertiary);
+        }
+
+        .compound-item input[type="checkbox"] {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .compound-item.selected {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: transparent;
+        }
+
+        .compound-name {
+            font-weight: 600;
+            font-size: 12px;
+            margin-bottom: 4px;
+            padding-right: 20px;
+        }
+
+        .compound-formula {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-primary);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Continuum Bio Analysis</h1>
+            <p class="subtitle">Structural Perturbation Analysis Engine</p>
+        </header>
+
+        <div class="main-layout">
+            <!-- Left: Selected Items & Sections -->
+            <div class="left-panel">
+                <h2>Analysis Items</h2>
+
+                <!-- Section 1: Pharmaceuticals -->
+                <div class="selection-section">
+                    <div class="section-header" onclick="toggleSection('pharma')">
+                        <span>💊 Pharmaceuticals</span>
+                        <span id="pharma-toggle">▼</span>
+                    </div>
+                    <div id="pharma-section" class="section-content">
+                        <div class="items-list" id="pharmaList"></div>
+                    </div>
+                </div>
+
+                <!-- Section 2: OTC & Supplements -->
+                <div class="selection-section">
+                    <div class="section-header" onclick="toggleSection('otc')">
+                        <span>🌿 OTC & Supplements</span>
+                        <span id="otc-toggle">▼</span>
+                    </div>
+                    <div id="otc-section" class="section-content">
+                        <div class="items-list" id="otcList"></div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Conditions/Ailments -->
+                <div class="selection-section">
+                    <div class="section-header" onclick="toggleSection('conditions')">
+                        <span>🏥 Conditions & Ailments</span>
+                        <span id="conditions-toggle">▼</span>
+                    </div>
+                    <div id="conditions-section" class="section-content">
+                        <div class="items-list" id="conditionsList"></div>
+                    </div>
+                </div>
+
+                <!-- Selected List -->
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--primary);">
+                        Selected (<span id="selectionCount">0</span>)
+                    </div>
+                    <div class="selected-compounds-list" id="selectedList">
+                        <div class="empty-state" style="font-size: 12px;">No items selected</div>
+                    </div>
+                </div>
+
+                <div class="left-panel-footer">
+                    <button class="btn btn-secondary" onclick="clearSelection()">Clear</button>
+                    <button class="btn btn-primary" id="analyzeBtn" onclick="runAnalysis()" disabled>
+                        Run Analysis
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: Results -->
+            <div class="right-panel">
+                <h2>Results</h2>
+
+                <div class="results-content" id="resultsContent">
+                    <div class="placeholder">
+                        <p><strong>No analysis yet</strong></p>
+                        <p>Select compounds and click "Run Analysis"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compound Selection Modal -->
+    <div class="modal" id="selectorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Compound Library (306 compounds)</h3>
+                <span class="modal-close" onclick="closeSelector()">×</span>
+            </div>
+
+            <div class="quick-search">
+                <input
+                    type="text"
+                    class="search-input"
+                    id="searchInput"
+                    placeholder="Search by name, formula, or category..."
+                    onkeyup="filterCompounds()"
+                >
+            </div>
+
+            <div class="category-tabs" id="categoryTabs"></div>
+
+            <div class="compound-grid" id="compoundGrid"></div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSelector()">Done</button>
+                <button class="btn btn-primary" onclick="closeSelector()">Close & Analyze</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000';
+        let allCompounds = [];
+        let selectedCompounds = new Set();
+        let categories = new Set();
+        let selectedCategory = 'All';
+
+        async function init() {
+            try {
+                // Check if backend is running
+                const health = await fetch(`${API_URL}/health`);
+                if (!health.ok) {
+                    showError('Backend not responding. Start with: python seam-server-v2.py');
+                    return;
+                }
+
+                // Load compounds
+                const response = await fetch(`${API_URL}/compounds`);
+                const data = await response.json();
+                allCompounds = data.compounds;
+
+                // Populate sections
+                renderSections();
+
+                // Open all sections by default
+                ['pharma', 'otc', 'conditions'].forEach(sec => {
+                    const content = document.getElementById(sec + '-section');
+                    if (content) content.classList.add('open');
+                    const toggle = document.getElementById(sec + '-toggle');
+                    if (toggle) toggle.textContent = '▲';
+                });
+
+            } catch (e) {
+                console.error('Init error:', e);
+                showError(`Cannot connect to backend at ${API_URL}. Make sure it's running.`);
+            }
+        }
+
+        function toggleSection(section) {
+            const content = document.getElementById(section + '-section');
+            const toggle = document.getElementById(section + '-toggle');
+            content.classList.toggle('open');
+            toggle.textContent = content.classList.contains('open') ? '▲' : '▼';
+        }
+
+        async function renderSections() {
+            // Categorize compounds - OTC includes all supplements, vitamins, minerals, amino acids, etc.
+            const otc = allCompounds.filter(c =>
+                c.category.includes('Supplement') ||
+                c.category.includes('Vitamin') ||
+                c.category.includes('Mineral') ||
+                c.category.includes('Amino') ||
+                c.category.includes('Fatty') ||
+                c.category.includes('Nutraceutical') ||
+                c.category.includes('Performance') ||
+                c.category.includes('Drug/Supplement') ||
+                c.category.includes('Supplement/Drug') ||
+                c.category.includes('Supplement/Other') ||
+                c.category.includes('Boron') ||
+                c.category.includes('Endogenous') ||
+                (c.category.includes('Drug') && c.category.includes('Sleep'))
+            );
+            const pharma = allCompounds.filter(c => c.category.startsWith('Drug') && !otc.includes(c));
+
+            // Fetch conditions from server
+            let conditions = [];
+            try {
+                const response = await fetch(`${API_URL}/conditions`);
+                const data = await response.json();
+                conditions = data.conditions || [];
+            } catch (e) {
+                console.error('Could not load conditions:', e);
+            }
+
+            renderItemList('pharmaList', pharma);
+            renderItemList('otcList', otc);
+            renderItemList('conditionsList', conditions);
+        }
+
+        function renderItemList(containerId, items) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            // Sort items alphabetically by generic_name
+            const sortedItems = [...items].sort((a, b) => a.generic_name.localeCompare(b.generic_name));
+            sortedItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'section-item' + (selectedCompounds.has(item.generic_name) ? ' selected' : '');
+                div.textContent = item.generic_name;
+                div.onclick = () => toggleItemSelection(item);
+                container.appendChild(div);
+            });
+        }
+
+        function toggleItemSelection(item) {
+            if (selectedCompounds.has(item.generic_name)) {
+                selectedCompounds.delete(item.generic_name);
+            } else {
+                selectedCompounds.add(item.generic_name);
+            }
+            updateSelectedDisplay();
+            renderSections();
+        }
+
+        function renderCategoryTabs() {
+            const tabs = document.getElementById('categoryTabs');
+            tabs.innerHTML = '<div class="category-tab active" onclick="setCategory(\'All\')">All</div>';
+
+            Array.from(categories).sort().forEach(cat => {
+                tabs.innerHTML += `<div class="category-tab" onclick="setCategory('${cat}')">${cat}</div>`;
+            });
+        }
+
+        function setCategory(cat) {
+            selectedCategory = cat;
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            renderCompoundsList();
+        }
+
+        function renderCompoundsList() {
+            const grid = document.getElementById('compoundGrid');
+            grid.innerHTML = '';
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = allCompounds.filter(c => {
+                const matchSearch = !searchTerm ||
+                    c.generic_name.toLowerCase().includes(searchTerm) ||
+                    c.chemical_formula.toLowerCase().includes(searchTerm) ||
+                    c.category.toLowerCase().includes(searchTerm) ||
+                    c.trade_names.some(t => t.toLowerCase().includes(searchTerm));
+
+                const matchCategory = selectedCategory === 'All' ||
+                    c.category.startsWith(selectedCategory);
+
+                return matchSearch && matchCategory;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state" style="grid-column: 1/-1; padding: 40px;">No compounds found</div>';
+                return;
+            }
+
+            filtered.forEach(compound => {
+                const item = document.createElement('div');
+                item.className = 'compound-item' + (selectedCompounds.has(compound.generic_name) ? ' selected' : '');
+
+                item.innerHTML = `
+                    <input type="checkbox"
+                           ${selectedCompounds.has(compound.generic_name) ? 'checked' : ''}
+                           onchange="toggleCompound('${compound.generic_name}', this.checked)">
+                    <div class="compound-name">${compound.generic_name}</div>
+                    <div class="compound-formula">${compound.chemical_formula}</div>
+                `;
+
+                item.onclick = (e) => {
+                    if (e.target.tagName !== 'INPUT') {
+                        const checkbox = item.querySelector('input');
+                        checkbox.checked = !checkbox.checked;
+                        toggleCompound(compound.generic_name, checkbox.checked);
+                    }
+                };
+
+                grid.appendChild(item);
+            });
+        }
+
+        function toggleCompound(name, isSelected) {
+            if (isSelected) {
+                if (selectedCompounds.size >= 50) {
+                    alert('Maximum 50 compounds per analysis');
+                    return;
+                }
+                selectedCompounds.add(name);
+            } else {
+                selectedCompounds.delete(name);
+            }
+            updateSelectedDisplay();
+            renderCompoundsList();
+        }
+
+        function updateSelectedDisplay() {
+            const list = document.getElementById('selectedList');
+            const count = document.getElementById('selectionCount');
+            count.textContent = selectedCompounds.size;
+            document.getElementById('analyzeBtn').disabled = selectedCompounds.size === 0;
+
+            if (selectedCompounds.size === 0) {
+                list.innerHTML = '<div class="empty-state" style="font-size: 12px;">No items selected</div>';
+            } else {
+                const selected = Array.from(selectedCompounds).sort();
+                list.innerHTML = selected.map(name =>
+                    `<div class="compound-tag">
+                        <span>${name}</span>
+                        <span class="remove" onclick="toggleCompound('${name}', false)">×</span>
+                    </div>`
+                ).join('');
+            }
+        }
+
+        function filterCompounds() {
+            renderCompoundsList();
+        }
+
+        function openSelector() {
+            document.getElementById('selectorModal').classList.add('active');
+        }
+
+        function closeSelector() {
+            document.getElementById('selectorModal').classList.remove('active');
+        }
+
+        function clearSelection() {
+            selectedCompounds.clear();
+            updateSelectedDisplay();
+        }
+
+        async function runAnalysis() {
+            if (selectedCompounds.size === 0) return;
+
+            const selected = Array.from(selectedCompounds).map(name => {
+                // Try to find in allCompounds first
+                let compound = allCompounds.find(c => c.generic_name === name);
+                // If not found, create a condition item
+                if (!compound) {
+                    compound = { generic_name: name, chemical_formula: 'condition', category: 'Condition' };
+                }
+                return compound;
+            }).filter(c => c);
+
+            showLoading();
+
+            try {
+                const response = await fetch(`${API_URL}/analyze`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ compounds: selected })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                const taskId = data.task_id;
+
+                // Poll for results
+                pollResults(taskId);
+            } catch (e) {
+                showError(`Analysis failed: ${e.message}`);
+            }
+        }
+
+        function pollResults(taskId) {
+            const poll = setInterval(async () => {
+                try {
+                    const response = await fetch(`${API_URL}/results/${taskId}`);
+                    const task = await response.json();
+
+                    if (task.status === 'completed') {
+                        clearInterval(poll);
+                        displayResults(task.result);
+                    } else if (task.status === 'failed') {
+                        clearInterval(poll);
+                        showError(`Analysis failed: ${task.error}`);
+                    } else {
+                        updateProgress(task.progress);
+                    }
+                } catch (e) {
+                    clearInterval(poll);
+                    showError(`Error polling results: ${e.message}`);
+                }
+            }, 500);
+        }
+
+        function showLoading() {
+            const content = document.getElementById('resultsContent');
+            content.innerHTML = `
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 16px; color: var(--text-secondary);">Analyzing...</p>
+                    <div class="progress-bar" style="width: 200px; margin-top: 16px;">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText" style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">0%</p>
+                </div>
+            `;
+        }
+
+        function updateProgress(percent) {
+            const fill = document.getElementById('progressFill');
+            const text = document.getElementById('progressText');
+            if (fill && text) {
+                fill.style.width = percent + '%';
+                text.textContent = percent + '%';
+            }
+        }
+
+        function displayComparativeResults(data) {
+            let html = '';
+            const differential = data.differential || {};
+            const total = data.total || {};
+
+            // Header
+            html += `
+                <div style="padding: 12px; background: var(--bg-tertiary); border-radius: 6px; margin-bottom: 12px; border-left: 3px solid var(--primary);">
+                    <div style="font-size: 11px; color: var(--text-secondary); font-family: 'JetBrains Mono';">
+                        <strong>Lock:</strong> ${data.lock_sha256 ? data.lock_sha256.substring(0, 24) + '...' : 'N/A'}<br>
+                        <strong>Database:</strong> ${data.rows} rows, ${data.structures} structures<br>
+                        <strong>Total Impacts:</strong> ${total.total_impacts || 0}
+                    </div>
+                </div>
+            `;
+
+            // DIFFERENTIAL section
+            if (differential.structures && differential.structures.length > 0) {
+                html += `
+                    <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-primary); border-radius: 6px; border: 2px solid #FB923C;">
+                        <div style="font-weight: 600; color: #FB923C; margin-bottom: 8px; font-size: 13px;">
+                            ➕ Additional Impact from Your Compounds (${differential.new_impacts || 0} new)
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            ${(differential.structures || []).map(s => `
+                                <div style="padding: 4px 6px; background: var(--bg-secondary); border-radius: 3px; font-size: 10px; color: #FB923C;">
+                                    + ${s.structure} <span style="opacity: 0.6;">${s.new_breaks}/${s.relations}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // TOTAL section
+            html += `
+                <div style="padding: 12px; background: var(--bg-primary); border-radius: 6px; border: 2px solid #EF4444;">
+                    <div style="font-weight: 600; color: #EF4444; margin-bottom: 8px; font-size: 13px;">
+                        🔴 Body Impact (${total.total_impacts || 0} complications)
+                    </div>
+                    <div style="font-size: 10px; color: var(--text-secondary); margin-bottom: 8px;">
+                        Severity: ${total.tiers ? Object.entries(total.tiers).map(([k,v]) => `<span style="color: ${k === 'CRITICAL' ? '#EF4444' : k === 'HIGH' ? '#F87171' : k === 'MODERATE' ? '#FB923C' : '#FCD34D'}">${k}:${v}</span>`).join(' | ') : 'N/A'}
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        ${(total.structures || []).map(s => `
+                            <div style="padding: 4px 6px; background: var(--bg-secondary); border-radius: 3px; font-size: 10px; border-left: 2px solid ${
+                                s.criticality === 'CRITICAL' ? '#EF4444' : s.criticality === 'HIGH' ? '#F87171' : s.criticality === 'MODERATE' ? '#FB923C' : '#FCD34D'
+                            };">
+                                ${s.structure} <span style="opacity: 0.6;">${s.new_breaks}/${s.relations} • ${s.criticality}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            return html;
+        }
+
+        function displayResults(data) {
+            const content = document.getElementById('resultsContent');
+            let html = '<div style="font-size: 12px;">';
+
+            // Check if this is comparative analysis
+            if (data.analysis_mode === 'comparative' && data.baseline) {
+                html += displayComparativeResults(data);
+                html += '</div>';
+                content.innerHTML = html;
+                return;
+            }
+
+            // Show lock hash and metadata
+            html += `
+                <div style="padding: 12px; background: var(--bg-tertiary); border-radius: 6px; margin-bottom: 12px; border-left: 3px solid var(--primary);">
+                    <div style="font-size: 11px; color: var(--text-secondary); font-family: 'JetBrains Mono'; word-break: break-all;">
+                        <strong>Lock:</strong> ${data.lock_sha256 ? data.lock_sha256.substring(0, 24) + '...' : 'N/A'}<br>
+                        <strong>Database:</strong> ${data.rows} rows, ${data.structures} structures<br>
+                        <strong>Items Analyzed:</strong> ${data.compounds_analyzed} compound(s)<br>
+                        <strong>Total Impacts:</strong> ${data.total_structural_impacts || 0} structural changes
+                    </div>
+                </div>
+            `;
+
+            // Show aggregate severity breakdown
+            if (data.aggregate_tiers) {
+                html += `
+                    <div style="padding: 10px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 12px; border: 1px solid var(--border);">
+                        <div style="font-weight: 600; margin-bottom: 6px; font-size: 12px; color: var(--primary);">Severity Summary</div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap; font-size: 11px;">
+                            ${['CRITICAL', 'HIGH', 'MODERATE', 'MINOR'].map(tier => `
+                                <span style="background: var(--bg-primary); padding: 3px 8px; border-radius: 3px; color: ${
+                                    tier === 'CRITICAL' ? '#EF4444' :
+                                    tier === 'HIGH' ? '#F87171' :
+                                    tier === 'MODERATE' ? '#FB923C' : '#FCD34D'
+                                }; font-weight: 500;">
+                                    ${tier}: ${data.aggregate_tiers[tier] || 0}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Display merged structures sorted by severity
+            if (data.all_structures_merged && data.all_structures_merged.length > 0) {
+                html += `
+                    <div style="padding: 12px; background: var(--bg-primary); border-radius: 6px; border: 1px solid var(--border);">
+                        <div style="font-weight: 600; color: var(--primary); margin-bottom: 10px; font-size: 13px;">
+                            📊 Body System Impact (Severity Order)
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            ${data.all_structures_merged.map((struct, idx) => `
+                                <div style="padding: 8px; background: var(--bg-secondary); border-radius: 4px; border-left: 4px solid ${
+                                    struct.criticality === 'CRITICAL' ? '#EF4444' :
+                                    struct.criticality === 'HIGH' ? '#F87171' :
+                                    struct.criticality === 'MODERATE' ? '#FB923C' : '#FCD34D'
+                                };">
+                                    <div style="font-size: 11px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px;">
+                                        ${struct.structure}
+                                    </div>
+                                    <div style="font-size: 10px; color: var(--text-secondary); display: flex; justify-content: space-between; gap: 8px;">
+                                        <span><strong>${struct.new_breaks}</strong>/<span style="opacity: 0.7;">${struct.relations}</span> breaks</span>
+                                        <span style="color: ${
+                                            struct.criticality === 'CRITICAL' ? '#EF4444' :
+                                            struct.criticality === 'HIGH' ? '#F87171' :
+                                            struct.criticality === 'MODERATE' ? '#FB923C' : '#FCD34D'
+                                        }; font-weight: 600;">${struct.criticality}</span>
+                                        <span style="opacity: 0.5; font-size: 9px;">source: ${struct.source}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        function showError(message) {
+            const content = document.getElementById('resultsContent');
+            content.innerHTML = `
+                <div class="placeholder" style="color: var(--error);">
+                    <p><strong>⚠️ Error</strong></p>
+                    <p style="color: var(--text-secondary);">${message}</p>
+                </div>
+            `;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

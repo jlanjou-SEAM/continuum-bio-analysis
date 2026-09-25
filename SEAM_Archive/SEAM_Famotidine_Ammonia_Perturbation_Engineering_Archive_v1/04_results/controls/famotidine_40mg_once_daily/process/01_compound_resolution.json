@@ -1,0 +1,18 @@
+{
+  "atom_count": 35,
+  "canonical_name": "Famotidine",
+  "chemical_formula": "C8H15N7O2S3",
+  "compound_projection_sha256": "52e18b9a7a3de683a856a0a2f8d995dddce1f6783839223c9752d15c3bc271b2",
+  "compound_query": "Famotidine",
+  "compound_structure_sha256": "52e18b9a7a3de683a856a0a2f8d995dddce1f6783839223c9752d15c3bc271b2",
+  "elemental_composition": {
+    "C": 8,
+    "H": 15,
+    "N": 7,
+    "O": 2,
+    "S": 3
+  },
+  "formula_source": "local_name_registry",
+  "molecular_mass_g_mol": 337.44539999999995,
+  "registry_key": "famotidine"
+}

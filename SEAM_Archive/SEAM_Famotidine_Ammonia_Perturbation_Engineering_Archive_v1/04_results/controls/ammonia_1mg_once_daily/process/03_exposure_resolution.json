@@ -1,0 +1,16 @@
+{
+  "compound_loading_mmol_per_day": 0.05871811312866548,
+  "daily_equivalent_analysis_mg": 1.0,
+  "dose": {
+    "dose_mass_mg": 1.0,
+    "dose_raw": "1 mg",
+    "dose_unit": "mg",
+    "dose_value": 1.0
+  },
+  "interval": {
+    "interval_raw": "once daily",
+    "interval_seconds": 86400.0,
+    "interval_unit": "day",
+    "interval_value": 1.0
+  }
+}

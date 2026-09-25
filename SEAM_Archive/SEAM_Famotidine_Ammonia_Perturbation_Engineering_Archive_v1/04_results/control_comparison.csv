@@ -1,0 +1,4 @@
+state,language_family_rows,language_mean_abs_offset,language_total_new_breaks,language_total_restored_relations,word_finding_abs_offset,word_finding_new_breaks,word_finding_restored_relations
+famotidine_alone,17,0.018512813899149418,151,64,0.0244017651524711,9,6
+ammonia_1mg_alone,17,0.01601604550846915,126,29,0.020584087136681,11,1
+famotidine_plus_ammonia_1mg,17,0.03648893784260881,226,63,0.0466495301554407,15,6

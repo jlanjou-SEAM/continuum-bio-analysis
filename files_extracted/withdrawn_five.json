@@ -1,0 +1,363 @@
+{
+ "lock_sha256": "62c6aa75effef85b9039251fd7fd2dae7e11b676e861f71ac7892f33a1bd85e4",
+ "rows": 5734,
+ "structures": 420,
+ "compounds": [
+  {
+   "name": "terfenadine",
+   "formula": "C32H41NO2",
+   "mw": 471.673,
+   "dose_mg_day": 120,
+   "loading_mmol_day": 0.254413,
+   "status": "withdrawn",
+   "known_effect": "QT prolongation / torsades de pointes",
+   "projection_sha256": "30356751c53f6fec6dac9499721bbb548782b14d65b3d095ee72bbc1a21af383",
+   "control_transitions": 0,
+   "rows_with_new_breaks": 1379,
+   "tiers": {
+    "MINOR": 1256,
+    "MODERATE": 59,
+    "CRITICAL": 62,
+    "HIGH": 2
+   },
+   "target_rows": 103,
+   "target_structures": [
+    {
+     "new_breaks": 81,
+     "relations": 780,
+     "structure": "cardiac rhythm-to-cerebral-perfusion continuity structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 81,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 79,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 78,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 75,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 74,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    }
+   ]
+  },
+  {
+   "name": "cisapride",
+   "formula": "C23H29ClFN3O4",
+   "mw": 465.945,
+   "dose_mg_day": 40,
+   "loading_mmol_day": 0.085847,
+   "status": "withdrawn",
+   "known_effect": "QT prolongation / torsades de pointes",
+   "projection_sha256": "220fc50af50dfb5a87be957d80295553a064147b1acd040bf0457d3efa209e07",
+   "control_transitions": 0,
+   "rows_with_new_breaks": 1243,
+   "tiers": {
+    "MINOR": 1133,
+    "MODERATE": 41,
+    "CRITICAL": 61,
+    "HIGH": 8
+   },
+   "target_rows": 99,
+   "target_structures": [
+    {
+     "new_breaks": 62,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 52,
+     "relations": 780,
+     "structure": "cardiac rhythm-to-cerebral-perfusion continuity structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 52,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 51,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 47,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 46,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    }
+   ]
+  },
+  {
+   "name": "rofecoxib",
+   "formula": "C17H14O4S",
+   "mw": 314.356,
+   "dose_mg_day": 25,
+   "loading_mmol_day": 0.079528,
+   "status": "withdrawn",
+   "known_effect": "thrombotic cardiovascular events",
+   "projection_sha256": "9bc72b3afea193b5795b473f7725d269e3d2057f38b283d8046a94f5b1b7a85d",
+   "control_transitions": 0,
+   "rows_with_new_breaks": 1092,
+   "tiers": {
+    "MINOR": 1080,
+    "MODERATE": 12
+   },
+   "target_rows": 19,
+   "target_structures": [
+    {
+     "new_breaks": 63,
+     "relations": 528,
+     "structure": "local cutaneous microvascular-hemostasis structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 31,
+     "relations": 435,
+     "structure": "arterial-lumen blood-flow and thrombotic-hemostasis structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 15,
+     "relations": 435,
+     "structure": "arterial-lumen blood-flow and thrombotic-hemostasis structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 2,
+     "relations": 15,
+     "structure": "platelet production, activation, adhesion, and aggregation structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 1,
+     "relations": 15,
+     "structure": "platelet production, activation, adhesion, and aggregation structure",
+     "criticality": "MINOR"
+    }
+   ]
+  },
+  {
+   "name": "cerivastatin",
+   "formula": "C26H34FNO5",
+   "mw": 459.55,
+   "dose_mg_day": 0.4,
+   "loading_mmol_day": 0.00087,
+   "status": "withdrawn",
+   "known_effect": "rhabdomyolysis",
+   "projection_sha256": "23e74627d2173e0b045bc465ecb9214bda2b8dbe1cc15c250b6472baf355a6dd",
+   "control_transitions": 0,
+   "rows_with_new_breaks": 952,
+   "tiers": {
+    "MINOR": 951,
+    "MODERATE": 1
+   },
+   "target_rows": 5,
+   "target_structures": [
+    {
+     "new_breaks": 13,
+     "relations": 406,
+     "structure": "skeletal-muscle fiber excitation-contraction and load-transfer structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 1,
+     "relations": 105,
+     "structure": "musculoskeletal mechanical-integrity and repair structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 1,
+     "relations": 21,
+     "structure": "regional limb musculoskeletal, neurovascular, and skin structure",
+     "criticality": "MINOR"
+    }
+   ]
+  },
+  {
+   "name": "troglitazone",
+   "formula": "C24H27NO5S",
+   "mw": 441.54,
+   "dose_mg_day": 400,
+   "loading_mmol_day": 0.90592,
+   "status": "withdrawn",
+   "known_effect": "hepatocellular injury",
+   "projection_sha256": "ac6035e330c0a2d74ca45baf83c1d8092aab3a648ce14d947095caf9bbf96756",
+   "control_transitions": 0,
+   "rows_with_new_breaks": 1682,
+   "tiers": {
+    "MINOR": 986,
+    "HIGH": 98,
+    "CRITICAL": 236,
+    "MODERATE": 362
+   },
+   "target_rows": 4,
+   "target_structures": [
+    {
+     "new_breaks": 230,
+     "relations": 861,
+     "structure": "hepatobiliary and bone alkaline-phosphatase production/release structure",
+     "criticality": "MODERATE"
+    },
+    {
+     "new_breaks": 140,
+     "relations": 666,
+     "structure": "hepatocyte immune-inflammatory and metabolic integrity structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 49,
+     "relations": 153,
+     "structure": "hepatic ethanol-metabolism and systemic ethanol-response structure",
+     "criticality": "MODERATE"
+    },
+    {
+     "new_breaks": 8,
+     "relations": 15,
+     "structure": "hepatic ketone-production and systemic ketone-clearance structure",
+     "criticality": "HIGH"
+    }
+   ]
+  },
+  {
+   "name": "famotidine",
+   "formula": "C8H15N7O2S3",
+   "mw": 337.445,
+   "dose_mg_day": 40,
+   "loading_mmol_day": 0.118538,
+   "status": "marketed",
+   "known_effect": "no cardiac profile",
+   "projection_sha256": "52e18b9a7a3de683a856a0a2f8d995dddce1f6783839223c9752d15c3bc271b2",
+   "control_transitions": 0,
+   "rows_with_new_breaks": 1129,
+   "tiers": {
+    "MINOR": 1039,
+    "MODERATE": 90
+   },
+   "target_rows": 37,
+   "target_structures": [
+    {
+     "new_breaks": 38,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 34,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 32,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 30,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 25,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 24,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    }
+   ]
+  },
+  {
+   "name": "albuterol",
+   "formula": "C13H21NO3",
+   "mw": 239.311,
+   "dose_mg_day": 10,
+   "loading_mmol_day": 0.041787,
+   "status": "marketed",
+   "known_effect": "palpitations / blood pressure; no arrhythmia",
+   "projection_sha256": "c91a0e1c036545dd1913f0793b6b84e4f9637ff23dca8b974205bccafa9b4303",
+   "control_transitions": 0,
+   "rows_with_new_breaks": 1155,
+   "tiers": {
+    "MINOR": 1080,
+    "MODERATE": 17,
+    "CRITICAL": 58
+   },
+   "target_rows": 83,
+   "target_structures": [
+    {
+     "new_breaks": 41,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 38,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 36,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 34,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 31,
+     "relations": 703,
+     "structure": "cardiac conduction, depolarization, repolarization, and rhythm structure",
+     "criticality": "MINOR"
+    },
+    {
+     "new_breaks": 29,
+     "relations": 780,
+     "structure": "cardiac rhythm-to-cerebral-perfusion continuity structure",
+     "criticality": "MINOR"
+    }
+   ]
+  }
+ ]
+}

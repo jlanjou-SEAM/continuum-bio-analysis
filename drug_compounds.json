@@ -1,0 +1,892 @@
+{
+  "compounds": [
+    {
+      "name": "acetaminophen",
+      "formula": "C8H9NO2",
+      "mw": 151.163,
+      "category": "analgesic/antipyretic",
+      "typical_dose_mg": 500,
+      "status": "OTC",
+      "common_names": ["paracetamol", "tylenol"]
+    },
+    {
+      "name": "ibuprofen",
+      "formula": "C13H18O2",
+      "mw": 206.282,
+      "category": "NSAID",
+      "typical_dose_mg": 200,
+      "status": "OTC",
+      "common_names": ["advil", "motrin"]
+    },
+    {
+      "name": "aspirin",
+      "formula": "C9H8O4",
+      "mw": 180.163,
+      "category": "analgesic/antiplatelet",
+      "typical_dose_mg": 325,
+      "status": "OTC",
+      "common_names": ["acetylsalicylic acid"]
+    },
+    {
+      "name": "naproxen",
+      "formula": "C14H14O3",
+      "mw": 230.262,
+      "category": "NSAID",
+      "typical_dose_mg": 220,
+      "status": "OTC",
+      "common_names": ["aleve", "naprosyn"]
+    },
+    {
+      "name": "ketoprofen",
+      "formula": "C16H14O3",
+      "mw": 254.281,
+      "category": "NSAID",
+      "typical_dose_mg": 25,
+      "status": "Rx/OTC",
+      "common_names": ["orudis", "actron"]
+    },
+    {
+      "name": "meloxicam",
+      "formula": "C14H13N3O4S",
+      "mw": 351.341,
+      "category": "NSAID",
+      "typical_dose_mg": 7.5,
+      "status": "Rx",
+      "common_names": ["mobic"]
+    },
+    {
+      "name": "diphenhydramine",
+      "formula": "C17H21NO",
+      "mw": 255.363,
+      "category": "antihistamine/sedating",
+      "typical_dose_mg": 25,
+      "status": "OTC",
+      "common_names": ["benadryl"]
+    },
+    {
+      "name": "loratadine",
+      "formula": "C22H23ClN2O",
+      "mw": 382.888,
+      "category": "antihistamine/non-sedating",
+      "typical_dose_mg": 10,
+      "status": "OTC",
+      "common_names": ["claritin", "alavert"]
+    },
+    {
+      "name": "cetirizine",
+      "formula": "C21H25ClN2O3",
+      "mw": 388.894,
+      "category": "antihistamine/non-sedating",
+      "typical_dose_mg": 10,
+      "status": "OTC",
+      "common_names": ["zyrtec"]
+    },
+    {
+      "name": "fexofenadine",
+      "formula": "C32H39ClN2O4",
+      "mw": 558.129,
+      "category": "antihistamine/non-sedating",
+      "typical_dose_mg": 180,
+      "status": "OTC",
+      "common_names": ["allegra"]
+    },
+    {
+      "name": "terfenadine",
+      "formula": "C32H41NO2",
+      "mw": 471.673,
+      "category": "antihistamine",
+      "typical_dose_mg": 60,
+      "status": "withdrawn",
+      "common_names": ["seldane"],
+      "withdrawal_reason": "QT prolongation/torsades de pointes"
+    },
+    {
+      "name": "omeprazole",
+      "formula": "C17H19N3O3S",
+      "mw": 345.423,
+      "category": "proton pump inhibitor",
+      "typical_dose_mg": 20,
+      "status": "OTC/Rx",
+      "common_names": ["prilosec"]
+    },
+    {
+      "name": "lansoprazole",
+      "formula": "C16H17F2N3O2S",
+      "mw": 369.388,
+      "category": "proton pump inhibitor",
+      "typical_dose_mg": 30,
+      "status": "OTC/Rx",
+      "common_names": ["prevacid"]
+    },
+    {
+      "name": "pantoprazole",
+      "formula": "C16H15F2N3O4S",
+      "mw": 383.368,
+      "category": "proton pump inhibitor",
+      "typical_dose_mg": 40,
+      "status": "Rx",
+      "common_names": ["protonix"]
+    },
+    {
+      "name": "famotidine",
+      "formula": "C8H15N7O2S3",
+      "mw": 337.445,
+      "category": "H2 receptor antagonist",
+      "typical_dose_mg": 20,
+      "status": "OTC/Rx",
+      "common_names": ["pepcid"]
+    },
+    {
+      "name": "ranitidine",
+      "formula": "C13H22N4O3S",
+      "mw": 314.411,
+      "category": "H2 receptor antagonist",
+      "typical_dose_mg": 150,
+      "status": "withdrawn",
+      "common_names": ["zantac"],
+      "withdrawal_reason": "NDMA contamination"
+    },
+    {
+      "name": "cimetidine",
+      "formula": "C10H16N4S",
+      "mw": 252.337,
+      "category": "H2 receptor antagonist",
+      "typical_dose_mg": 300,
+      "status": "OTC/Rx",
+      "common_names": ["tagamet"]
+    },
+    {
+      "name": "metformin",
+      "formula": "C4H11N5",
+      "mw": 129.163,
+      "category": "antidiabetic/biguanide",
+      "typical_dose_mg": 500,
+      "status": "Rx",
+      "common_names": ["glucophage"]
+    },
+    {
+      "name": "glipizide",
+      "formula": "C21H27ClN3O4S",
+      "mw": 445.979,
+      "category": "antidiabetic/sulfonylurea",
+      "typical_dose_mg": 5,
+      "status": "Rx",
+      "common_names": ["glucotrol"]
+    },
+    {
+      "name": "glyburide",
+      "formula": "C23H28ClN3O5S",
+      "mw": 494.008,
+      "category": "antidiabetic/sulfonylurea",
+      "typical_dose_mg": 2.5,
+      "status": "Rx",
+      "common_names": ["diabeta", "micronase"]
+    },
+    {
+      "name": "lisinopril",
+      "formula": "C21H31N3O5",
+      "mw": 405.53,
+      "category": "ACE inhibitor",
+      "typical_dose_mg": 10,
+      "status": "Rx",
+      "common_names": ["prinivil", "zestril"]
+    },
+    {
+      "name": "enalapril",
+      "formula": "C20H32N2O5",
+      "mw": 376.488,
+      "category": "ACE inhibitor",
+      "typical_dose_mg": 10,
+      "status": "Rx",
+      "common_names": ["vasotec"]
+    },
+    {
+      "name": "ramipril",
+      "formula": "C23H32N2O5",
+      "mw": 416.522,
+      "category": "ACE inhibitor",
+      "typical_dose_mg": 5,
+      "status": "Rx",
+      "common_names": ["altace"]
+    },
+    {
+      "name": "metoprolol",
+      "formula": "C15H25NO3",
+      "mw": 267.371,
+      "category": "beta blocker",
+      "typical_dose_mg": 50,
+      "status": "Rx",
+      "common_names": ["lopressor", "toprol-xl"]
+    },
+    {
+      "name": "atenolol",
+      "formula": "C14H22N2O3",
+      "mw": 266.341,
+      "category": "beta blocker",
+      "typical_dose_mg": 50,
+      "status": "Rx",
+      "common_names": ["tenormin"]
+    },
+    {
+      "name": "propranolol",
+      "formula": "C16H25NO2",
+      "mw": 259.379,
+      "category": "beta blocker",
+      "typical_dose_mg": 40,
+      "status": "Rx",
+      "common_names": ["inderal"]
+    },
+    {
+      "name": "amlodipine",
+      "formula": "C26H34ClN2O8",
+      "mw": 532.99,
+      "category": "calcium channel blocker",
+      "typical_dose_mg": 5,
+      "status": "Rx",
+      "common_names": ["norvasc"]
+    },
+    {
+      "name": "nifedipine",
+      "formula": "C17H18N2O6",
+      "mw": 346.34,
+      "category": "calcium channel blocker",
+      "typical_dose_mg": 30,
+      "status": "Rx",
+      "common_names": ["procardia", "adalat"]
+    },
+    {
+      "name": "diltiazem",
+      "formula": "C22H26N2O4S",
+      "mw": 414.528,
+      "category": "calcium channel blocker",
+      "typical_dose_mg": 120,
+      "status": "Rx",
+      "common_names": ["cardizem"]
+    },
+    {
+      "name": "simvastatin",
+      "formula": "C25H40O5",
+      "mw": 404.573,
+      "category": "statin/HMG-CoA reductase inhibitor",
+      "typical_dose_mg": 20,
+      "status": "Rx",
+      "common_names": ["zocor"]
+    },
+    {
+      "name": "atorvastatin",
+      "formula": "C33H35FN2O5",
+      "mw": 558.65,
+      "category": "statin/HMG-CoA reductase inhibitor",
+      "typical_dose_mg": 10,
+      "status": "Rx",
+      "common_names": ["lipitor"]
+    },
+    {
+      "name": "lovastatin",
+      "formula": "C24H36O7",
+      "mw": 404.545,
+      "category": "statin/HMG-CoA reductase inhibitor",
+      "typical_dose_mg": 20,
+      "status": "Rx",
+      "common_names": ["mevacor"]
+    },
+    {
+      "name": "cerivastatin",
+      "formula": "C26H34FNO5",
+      "mw": 459.55,
+      "category": "statin",
+      "typical_dose_mg": 0.4,
+      "status": "withdrawn",
+      "common_names": ["baycol"],
+      "withdrawal_reason": "rhabdomyolysis"
+    },
+    {
+      "name": "rofecoxib",
+      "formula": "C17H14O4S",
+      "mw": 314.356,
+      "category": "NSAID/COX-2 inhibitor",
+      "typical_dose_mg": 25,
+      "status": "withdrawn",
+      "common_names": ["vioxx"],
+      "withdrawal_reason": "thrombotic cardiovascular events"
+    },
+    {
+      "name": "cisapride",
+      "formula": "C23H29ClFN3O4",
+      "mw": 465.945,
+      "category": "prokinetic",
+      "typical_dose_mg": 10,
+      "status": "withdrawn",
+      "common_names": ["propulsid"],
+      "withdrawal_reason": "QT prolongation/torsades de pointes"
+    },
+    {
+      "name": "troglitazone",
+      "formula": "C24H27NO5S",
+      "mw": 441.54,
+      "category": "thiazolidinedione",
+      "typical_dose_mg": 200,
+      "status": "withdrawn",
+      "common_names": ["rezulin"],
+      "withdrawal_reason": "hepatocellular injury"
+    },
+    {
+      "name": "levothyroxine",
+      "formula": "C15H11I4NO4",
+      "mw": 776.869,
+      "category": "thyroid hormone",
+      "typical_dose_mg": 0.075,
+      "status": "Rx",
+      "common_names": ["synthroid", "levoxyl"]
+    },
+    {
+      "name": "albuterol",
+      "formula": "C13H21NO3",
+      "mw": 239.311,
+      "category": "beta-2 agonist/bronchodilator",
+      "typical_dose_mg": 5,
+      "status": "Rx",
+      "common_names": ["ventolin", "proventil"]
+    },
+    {
+      "name": "salbutamol",
+      "formula": "C13H21NO3",
+      "mw": 239.311,
+      "category": "beta-2 agonist/bronchodilator",
+      "typical_dose_mg": 5,
+      "status": "Rx",
+      "common_names": ["generic albuterol"]
+    },
+    {
+      "name": "theophylline",
+      "formula": "C7H8N4O2",
+      "mw": 180.165,
+      "category": "methylxanthine/bronchodilator",
+      "typical_dose_mg": 100,
+      "status": "Rx",
+      "common_names": ["theo-dur"]
+    },
+    {
+      "name": "amoxicillin",
+      "formula": "C16H19N3O5S",
+      "mw": 365.408,
+      "category": "antibiotic/beta-lactam",
+      "typical_dose_mg": 500,
+      "status": "Rx",
+      "common_names": ["amoxil", "augmentin"]
+    },
+    {
+      "name": "penicillin V",
+      "formula": "C16H18N2O4S",
+      "mw": 350.39,
+      "category": "antibiotic/beta-lactam",
+      "typical_dose_mg": 250,
+      "status": "Rx",
+      "common_names": ["generic penicillin"]
+    },
+    {
+      "name": "cephalexin",
+      "formula": "C16H17N3O4S",
+      "mw": 347.389,
+      "category": "antibiotic/cephalosporin",
+      "typical_dose_mg": 250,
+      "status": "Rx",
+      "common_names": ["keflex"]
+    },
+    {
+      "name": "erythromycin",
+      "formula": "C37H67NO13",
+      "mw": 733.925,
+      "category": "antibiotic/macrolide",
+      "typical_dose_mg": 500,
+      "status": "Rx",
+      "common_names": ["ery-tab", "pce"]
+    },
+    {
+      "name": "azithromycin",
+      "formula": "C38H72N2O12",
+      "mw": 784.99,
+      "category": "antibiotic/macrolide",
+      "typical_dose_mg": 250,
+      "status": "Rx",
+      "common_names": ["zithromax", "z-pack"]
+    },
+    {
+      "name": "clarithromycin",
+      "formula": "C38H69NO13",
+      "mw": 747.938,
+      "category": "antibiotic/macrolide",
+      "typical_dose_mg": 250,
+      "status": "Rx",
+      "common_names": ["biaxin"]
+    },
+    {
+      "name": "doxycycline",
+      "formula": "C22H24N2O8",
+      "mw": 444.435,
+      "category": "antibiotic/tetracycline",
+      "typical_dose_mg": 100,
+      "status": "Rx",
+      "common_names": ["vibramycin"]
+    },
+    {
+      "name": "ketoconazole",
+      "formula": "C26H25ClN4O4",
+      "mw": 531.098,
+      "category": "antifungal/azole",
+      "typical_dose_mg": 200,
+      "status": "Rx",
+      "common_names": ["nizoral"]
+    },
+    {
+      "name": "fluconazole",
+      "formula": "C13H12FN6O",
+      "mw": 306.271,
+      "category": "antifungal/azole",
+      "typical_dose_mg": 150,
+      "status": "Rx",
+      "common_names": ["diflucan"]
+    },
+    {
+      "name": "itraconazole",
+      "formula": "C35H38ClN7O4",
+      "mw": 704.169,
+      "category": "antifungal/azole",
+      "typical_dose_mg": 200,
+      "status": "Rx",
+      "common_names": ["sporanox"]
+    },
+    {
+      "name": "terbinafine",
+      "formula": "C21H26N",
+      "mw": 292.447,
+      "category": "antifungal/allylamine",
+      "typical_dose_mg": 250,
+      "status": "Rx/OTC",
+      "common_names": ["lamisil"]
+    },
+    {
+      "name": "caffeine",
+      "formula": "C8H10N4O2",
+      "mw": 194.191,
+      "category": "stimulant/methylxanthine",
+      "typical_dose_mg": 95,
+      "status": "OTC",
+      "common_names": ["coffee", "tea", "no-doz"]
+    },
+    {
+      "name": "pseudoephedrine",
+      "formula": "C9H13NO",
+      "mw": 151.206,
+      "category": "decongestant",
+      "typical_dose_mg": 30,
+      "status": "OTC",
+      "common_names": ["sudafed"]
+    },
+    {
+      "name": "guaifenesin",
+      "formula": "C7H10O3",
+      "mw": 198.145,
+      "category": "expectorant",
+      "typical_dose_mg": 100,
+      "status": "OTC",
+      "common_names": ["mucinex", "robitussin"]
+    },
+    {
+      "name": "sertraline",
+      "formula": "C17H17Cl2N",
+      "mw": 306.233,
+      "category": "SSRI",
+      "typical_dose_mg": 50,
+      "status": "Rx",
+      "common_names": ["zoloft"]
+    },
+    {
+      "name": "fluoxetine",
+      "formula": "C17H18F3NO",
+      "mw": 309.333,
+      "category": "SSRI",
+      "typical_dose_mg": 20,
+      "status": "Rx",
+      "common_names": ["prozac", "sarafem"]
+    },
+    {
+      "name": "paroxetine",
+      "formula": "C19H20FNO3",
+      "mw": 329.365,
+      "category": "SSRI",
+      "typical_dose_mg": 20,
+      "status": "Rx",
+      "common_names": ["paxil"]
+    },
+    {
+      "name": "citalopram",
+      "formula": "C20H21FN2O",
+      "mw": 324.394,
+      "category": "SSRI",
+      "typical_dose_mg": 20,
+      "status": "Rx",
+      "common_names": ["celexa"]
+    },
+    {
+      "name": "escitalopram",
+      "formula": "C20H21FN2O",
+      "mw": 324.394,
+      "category": "SSRI",
+      "typical_dose_mg": 10,
+      "status": "Rx",
+      "common_names": ["lexapro"]
+    },
+    {
+      "name": "venlafaxine",
+      "formula": "C17H27NO2",
+      "mw": 277.406,
+      "category": "SNRI",
+      "typical_dose_mg": 75,
+      "status": "Rx",
+      "common_names": ["effexor"]
+    },
+    {
+      "name": "duloxetine",
+      "formula": "C18H19NOS",
+      "mw": 297.411,
+      "category": "SNRI",
+      "typical_dose_mg": 30,
+      "status": "Rx",
+      "common_names": ["cymbalta"]
+    },
+    {
+      "name": "amitriptyline",
+      "formula": "C20H23N",
+      "mw": 277.394,
+      "category": "tricyclic antidepressant",
+      "typical_dose_mg": 25,
+      "status": "Rx",
+      "common_names": ["elavil"]
+    },
+    {
+      "name": "nortriptyline",
+      "formula": "C19H21N",
+      "mw": 263.379,
+      "category": "tricyclic antidepressant",
+      "typical_dose_mg": 25,
+      "status": "Rx",
+      "common_names": ["pamelor"]
+    },
+    {
+      "name": "bupropion",
+      "formula": "C13H18ClNO",
+      "mw": 239.748,
+      "category": "NDRI antidepressant",
+      "typical_dose_mg": 100,
+      "status": "Rx",
+      "common_names": ["wellbutrin", "aplenzin"]
+    },
+    {
+      "name": "gabapentin",
+      "formula": "C9H17NO2",
+      "mw": 171.237,
+      "category": "anticonvulsant/anxiolytic",
+      "typical_dose_mg": 300,
+      "status": "Rx",
+      "common_names": ["neurontin"]
+    },
+    {
+      "name": "pregabalin",
+      "formula": "C8H17NO2",
+      "mw": 159.227,
+      "category": "anticonvulsant/anxiolytic",
+      "typical_dose_mg": 150,
+      "status": "Rx",
+      "common_names": ["lyrica"]
+    },
+    {
+      "name": "levetiracetam",
+      "formula": "C8H15NO2",
+      "mw": 157.212,
+      "category": "anticonvulsant",
+      "typical_dose_mg": 250,
+      "status": "Rx",
+      "common_names": ["keppra"]
+    },
+    {
+      "name": "lorazepam",
+      "formula": "C15H10ClN3O2",
+      "mw": 321.754,
+      "category": "benzodiazepine",
+      "typical_dose_mg": 1,
+      "status": "Rx",
+      "common_names": ["ativan"]
+    },
+    {
+      "name": "alprazolam",
+      "formula": "C17H13ClN4",
+      "mw": 308.765,
+      "category": "benzodiazepine",
+      "typical_dose_mg": 0.5,
+      "status": "Rx",
+      "common_names": ["xanax"]
+    },
+    {
+      "name": "diazepam",
+      "formula": "C16H13ClN2O",
+      "mw": 284.744,
+      "category": "benzodiazepine",
+      "typical_dose_mg": 5,
+      "status": "Rx",
+      "common_names": ["valium"]
+    },
+    {
+      "name": "zolpidem",
+      "formula": "C19H21N3O",
+      "mw": 307.391,
+      "category": "sedative-hypnotic",
+      "typical_dose_mg": 10,
+      "status": "Rx",
+      "common_names": ["ambien"]
+    },
+    {
+      "name": "warfarin",
+      "formula": "C19H16O4",
+      "mw": 308.333,
+      "category": "anticoagulant/vitamin K antagonist",
+      "typical_dose_mg": 5,
+      "status": "Rx",
+      "common_names": ["coumadin"]
+    },
+    {
+      "name": "clopidogrel",
+      "formula": "C16H16ClNO2S",
+      "mw": 321.822,
+      "category": "antiplatelet",
+      "typical_dose_mg": 75,
+      "status": "Rx",
+      "common_names": ["plavix"]
+    },
+    {
+      "name": "ticlopidine",
+      "formula": "C14H14ClNS",
+      "mw": 263.778,
+      "category": "antiplatelet",
+      "typical_dose_mg": 250,
+      "status": "Rx",
+      "common_names": ["ticlid"]
+    },
+    {
+      "name": "donepezil",
+      "formula": "C24H29NO3",
+      "mw": 379.496,
+      "category": "cholinesterase inhibitor",
+      "typical_dose_mg": 10,
+      "status": "Rx",
+      "common_names": ["aricept"]
+    },
+    {
+      "name": "rivastigmine",
+      "formula": "C14H23N3O2",
+      "mw": 250.347,
+      "category": "cholinesterase inhibitor",
+      "typical_dose_mg": 3,
+      "status": "Rx",
+      "common_names": ["exelon"]
+    },
+    {
+      "name": "vitamin C ascorbic acid",
+      "formula": "C6H8O6",
+      "mw": 176.124,
+      "category": "vitamin/antioxidant",
+      "typical_dose_mg": 1000,
+      "status": "OTC",
+      "common_names": ["ascorbic acid"]
+    },
+    {
+      "name": "vitamin D3 cholecalciferol",
+      "formula": "C27H44O",
+      "mw": 384.637,
+      "category": "vitamin/steroid hormone",
+      "typical_dose_mg": 0.025,
+      "status": "OTC",
+      "common_names": ["cholecalciferol"]
+    },
+    {
+      "name": "vitamin B12 cobalamin",
+      "formula": "C63H88CoN14O14P",
+      "mw": 1355.365,
+      "category": "vitamin/coenzyme",
+      "typical_dose_mg": 0.0006,
+      "status": "OTC/Rx",
+      "common_names": ["cyanocobalamin", "methylcobalamin"]
+    },
+    {
+      "name": "folic acid vitamin B9",
+      "formula": "C19H19N7O6",
+      "mw": 441.396,
+      "category": "vitamin/nucleotide synthesis",
+      "typical_dose_mg": 0.4,
+      "status": "OTC",
+      "common_names": ["folate"]
+    },
+    {
+      "name": "iron ferrous sulfate",
+      "formula": "FeSO4·7H2O",
+      "mw": 278.014,
+      "category": "mineral/oxygen transport",
+      "typical_dose_mg": 65,
+      "status": "OTC",
+      "common_names": ["ferrous sulfate", "ferrous gluconate"]
+    },
+    {
+      "name": "calcium carbonate",
+      "formula": "CaCO3",
+      "mw": 100.087,
+      "category": "mineral/electrolyte",
+      "typical_dose_mg": 1000,
+      "status": "OTC",
+      "common_names": ["tums", "caltrate"]
+    },
+    {
+      "name": "magnesium oxide",
+      "formula": "MgO",
+      "mw": 40.305,
+      "category": "mineral/electrolyte",
+      "typical_dose_mg": 400,
+      "status": "OTC",
+      "common_names": ["magnesium"]
+    },
+    {
+      "name": "zinc gluconate",
+      "formula": "C12H22N2O16Zn",
+      "mw": 530.692,
+      "category": "mineral/immune support",
+      "typical_dose_mg": 15,
+      "status": "OTC",
+      "common_names": ["zinc lozenges"]
+    },
+    {
+      "name": "curcumin turmeric extract",
+      "formula": "C21H20O6",
+      "mw": 368.377,
+      "category": "herbal/anti-inflammatory",
+      "typical_dose_mg": 500,
+      "status": "OTC",
+      "common_names": ["tumeric root"]
+    },
+    {
+      "name": "ginger root extract",
+      "formula": "C17H26O4",
+      "mw": 290.384,
+      "category": "herbal/anti-inflammatory",
+      "typical_dose_mg": 1000,
+      "status": "OTC",
+      "common_names": ["gingerol"]
+    },
+    {
+      "name": "garlic extract allicin",
+      "formula": "C6H10OS2",
+      "mw": 162.272,
+      "category": "herbal/antimicrobial",
+      "typical_dose_mg": 1000,
+      "status": "OTC",
+      "common_names": ["aged garlic extract"]
+    },
+    {
+      "name": "echinacea purpurea",
+      "formula": "C17H26O9",
+      "mw": 378.387,
+      "category": "herbal/immune support",
+      "typical_dose_mg": 300,
+      "status": "OTC",
+      "common_names": ["purple coneflower"]
+    },
+    {
+      "name": "valerian root extract",
+      "formula": "C9H10O2",
+      "mw": 150.174,
+      "category": "herbal/sedative",
+      "typical_dose_mg": 300,
+      "status": "OTC",
+      "common_names": ["valeriana officinalis"]
+    },
+    {
+      "name": "melatonin",
+      "formula": "C13H16N2O2",
+      "mw": 232.278,
+      "category": "hormone/sleep regulator",
+      "typical_dose_mg": 1,
+      "status": "OTC",
+      "common_names": ["N-acetyl-5-methoxytryptamine"]
+    },
+    {
+      "name": "coenzyme Q10 ubiquinone",
+      "formula": "C59H90O4",
+      "mw": 863.364,
+      "category": "supplement/mitochondrial",
+      "typical_dose_mg": 100,
+      "status": "OTC",
+      "common_names": ["ubiquinone", "ubiquinol"]
+    },
+    {
+      "name": "omega-3 fish oil",
+      "formula": "C20H32O2",
+      "mw": 304.476,
+      "category": "supplement/lipid",
+      "typical_dose_mg": 1000,
+      "status": "OTC",
+      "common_names": ["EPA/DHA"]
+    },
+    {
+      "name": "probiotics lactobacillus",
+      "formula": "C12H22O11",
+      "mw": 342.296,
+      "category": "supplement/microbiome",
+      "typical_dose_mg": 1000,
+      "status": "OTC",
+      "common_names": ["live cultures"]
+    },
+    {
+      "name": "L-theanine",
+      "formula": "C7H12N2O3",
+      "mw": 188.190,
+      "category": "amino acid/relaxation",
+      "typical_dose_mg": 100,
+      "status": "OTC",
+      "common_names": ["gamma-ethylamino-L-glutamic acid"]
+    },
+    {
+      "name": "L-arginine",
+      "formula": "C6H14N4O2",
+      "mw": 174.201,
+      "category": "amino acid/vasodilator",
+      "typical_dose_mg": 500,
+      "status": "OTC",
+      "common_names": ["L-arginine base"]
+    },
+    {
+      "name": "L-lysine",
+      "formula": "C6H14N2O2",
+      "mw": 146.191,
+      "category": "amino acid/herpes support",
+      "typical_dose_mg": 500,
+      "status": "OTC",
+      "common_names": ["L-lysine HCl"]
+    },
+    {
+      "name": "NAC N-acetylcysteine",
+      "formula": "C5H9NO3S",
+      "mw": 163.198,
+      "category": "amino acid/antioxidant",
+      "typical_dose_mg": 600,
+      "status": "OTC",
+      "common_names": ["acetylcysteine"]
+    },
+    {
+      "name": "resveratrol",
+      "formula": "C14H12O3",
+      "mw": 228.243,
+      "category": "polyphenol/antioxidant",
+      "typical_dose_mg": 150,
+      "status": "OTC",
+      "common_names": ["red wine extract"]
+    }
+  ]
+}

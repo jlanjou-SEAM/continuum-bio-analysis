@@ -1,0 +1,14 @@
+{
+  "famotidine": {
+    "canonical_name": "Famotidine",
+    "formula": "C8H15N7O2S3"
+  },
+  "albuterol": {
+    "canonical_name": "Albuterol",
+    "formula": "C13H21NO3"
+  },
+  "salbutamol": {
+    "canonical_name": "Albuterol",
+    "formula": "C13H21NO3"
+  }
+}

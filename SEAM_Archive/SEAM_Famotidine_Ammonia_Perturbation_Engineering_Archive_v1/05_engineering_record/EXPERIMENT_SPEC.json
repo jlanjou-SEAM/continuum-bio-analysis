@@ -1,0 +1,43 @@
+{
+  "archive_schema": "SEAM_FAMOTIDINE_AMMONIA_ENGINEERING_ARCHIVE_V1",
+  "runtime": "SEAM_DRUG_STRUCTURAL_RUNTIME_LOCKED_v3_12",
+  "runtime_zip_sha256": "e8d0d92587d802ca348524d1073ee2853c8c3fc2992072c6f5db9a288aaba704",
+  "prescreen_lock_sha256": "62c6aa75effef85b9039251fd7fd2dae7e11b676e861f71ac7892f33a1bd85e4",
+  "fixed_component": {
+    "compound": "Famotidine",
+    "formula": "C8H15N7O2S3",
+    "dose_mg": 40.0,
+    "interval": "once daily",
+    "loading_mmol_per_day": 0.11853769528344439
+  },
+  "variable_component": {
+    "compound": "Ammonia",
+    "formula": "NH3",
+    "interval": "once daily",
+    "burden_mg_per_day": [
+      0.0,
+      0.1,
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      5.0
+    ]
+  },
+  "joint_state": {
+    "loading": "L_joint=L_F+L_A",
+    "projection": "Q_joint=(L_F*Q_F+L_A*Q_A)/L_joint",
+    "engine_input_equivalence": "B+L_joint*(Q_joint-G)=B+L_F*(Q_F-G)+L_A*(Q_A-G) before clipping/normalization"
+  },
+  "execution": {
+    "condition_rows": 5734,
+    "parent_constitutive_templates": 420,
+    "chemical_projection_dimensions": 128
+  },
+  "family": {
+    "selection": "structure contains language-processing OR speech-planning",
+    "frozen_rows": 17
+  },
+  "claim_type": "structural perturbation cause-and-effect assessment",
+  "clinical_boundary": "NH3 burden coordinates are model retained-burden coordinates, not clinical dosing recommendations."
+}

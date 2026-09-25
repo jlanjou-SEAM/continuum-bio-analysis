@@ -1,0 +1,612 @@
+{
+  "conditions": [
+    {
+      "generic_name": "Type 2 Diabetes",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "glucose-dependent insulin secretion structure", "new_breaks": 45, "relations": 320, "criticality": "HIGH"},
+        {"structure": "pancreatic beta-cell glucose sensing and metabolism structure", "new_breaks": 38, "relations": 280, "criticality": "MODERATE"},
+        {"structure": "insulin signaling and glucose uptake structure", "new_breaks": 52, "relations": 450, "criticality": "HIGH"},
+        {"structure": "vascular endothelial function and microvascular perfusion structure", "new_breaks": 34, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "renal glomerular filtration and podocyte structure", "new_breaks": 28, "relations": 420, "criticality": "MODERATE"},
+        {"structure": "peripheral sensory nerve function and nociception structure", "new_breaks": 22, "relations": 310, "criticality": "MINOR"}
+      ]
+    },
+    {
+      "generic_name": "Type 1 Diabetes",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "pancreatic beta-cell autoimmune destruction structure", "new_breaks": 58, "relations": 340, "criticality": "CRITICAL"},
+        {"structure": "glucose-dependent insulin secretion structure", "new_breaks": 62, "relations": 320, "criticality": "CRITICAL"},
+        {"structure": "insulin signaling and glucose uptake structure", "new_breaks": 55, "relations": 450, "criticality": "HIGH"},
+        {"structure": "immune T-cell and B-cell mediated response structure", "new_breaks": 48, "relations": 380, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Hypertension",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "vascular smooth muscle contraction and vasoconstriction structure", "new_breaks": 48, "relations": 520, "criticality": "HIGH"},
+        {"structure": "renal sodium-potassium balance and fluid volume regulation structure", "new_breaks": 41, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "arterial pressure regulation and baroreceptor reflex structure", "new_breaks": 35, "relations": 410, "criticality": "MODERATE"},
+        {"structure": "cardiac left ventricular hypertrophy and remodeling structure", "new_breaks": 38, "relations": 480, "criticality": "MODERATE"},
+        {"structure": "endothelial nitric oxide production and vasodilation structure", "new_breaks": 31, "relations": 350, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Prehypertension",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "vascular endothelial function and vasodilation structure", "new_breaks": 22, "relations": 350, "criticality": "MODERATE"},
+        {"structure": "arterial stiffness and elastic recoil structure", "new_breaks": 18, "relations": 310, "criticality": "MINOR"},
+        {"structure": "sympathetic nervous system tone and regulation structure", "new_breaks": 20, "relations": 280, "criticality": "MINOR"}
+      ]
+    },
+    {
+      "generic_name": "Coronary Artery Disease",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "arterial-lumen blood-flow and thrombotic-hemostasis structure", "new_breaks": 62, "relations": 580, "criticality": "CRITICAL"},
+        {"structure": "platelet production, activation, adhesion, and aggregation structure", "new_breaks": 58, "relations": 435, "criticality": "CRITICAL"},
+        {"structure": "cardiac rhythm-to-cerebral-perfusion continuity structure", "new_breaks": 45, "relations": 520, "criticality": "HIGH"},
+        {"structure": "myocardial oxygen supply and demand balance structure", "new_breaks": 51, "relations": 490, "criticality": "HIGH"},
+        {"structure": "cardiac conduction, depolarization, repolarization, and rhythm structure", "new_breaks": 48, "relations": 620, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Heart Failure",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "cardiac myocyte contractility and force generation structure", "new_breaks": 67, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "cardiac chamber geometry and ventricular remodeling structure", "new_breaks": 55, "relations": 480, "criticality": "HIGH"},
+        {"structure": "cardiac conduction, depolarization, repolarization, and rhythm structure", "new_breaks": 52, "relations": 620, "criticality": "HIGH"},
+        {"structure": "sympathetic and parasympathetic nervous system balance structure", "new_breaks": 44, "relations": 390, "criticality": "MODERATE"},
+        {"structure": "renal sodium-potassium balance and fluid volume regulation structure", "new_breaks": 48, "relations": 420, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Atrial Fibrillation",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "cardiac conduction, depolarization, repolarization, and rhythm structure", "new_breaks": 71, "relations": 620, "criticality": "CRITICAL"},
+        {"structure": "atrial myocyte automaticity and ectopic focus structure", "new_breaks": 58, "relations": 420, "criticality": "HIGH"},
+        {"structure": "atrioventricular node conduction delay and refractory period structure", "new_breaks": 48, "relations": 380, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Stroke",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "cerebral vascular perfusion and blood-brain barrier structure", "new_breaks": 72, "relations": 680, "criticality": "CRITICAL"},
+        {"structure": "neuronal excitability and synaptic transmission structure", "new_breaks": 65, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "arterial-lumen blood-flow and thrombotic-hemostasis structure", "new_breaks": 58, "relations": 580, "criticality": "CRITICAL"},
+        {"structure": "astrocyte and microglial inflammatory response structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "GERD (Acid Reflux)",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "lower esophageal sphincter tone and barrier function structure", "new_breaks": 35, "relations": 290, "criticality": "MODERATE"},
+        {"structure": "gastric acid secretion and pH regulation structure", "new_breaks": 42, "relations": 310, "criticality": "MODERATE"},
+        {"structure": "esophageal mucosal protection and epithelial barrier structure", "new_breaks": 28, "relations": 250, "criticality": "MODERATE"},
+        {"structure": "gastric motility and gastroesophageal clearance structure", "new_breaks": 32, "relations": 280, "criticality": "MINOR"}
+      ]
+    },
+    {
+      "generic_name": "Ulcerative Colitis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "colonic epithelial tight junction and barrier function structure", "new_breaks": 54, "relations": 480, "criticality": "HIGH"},
+        {"structure": "intestinal immune tolerance and T-regulatory cell function structure", "new_breaks": 58, "relations": 420, "criticality": "HIGH"},
+        {"structure": "mucosal inflammatory cytokine and neutrophil infiltration structure", "new_breaks": 62, "relations": 450, "criticality": "CRITICAL"},
+        {"structure": "intestinal epithelial cell apoptosis and regeneration structure", "new_breaks": 48, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Crohn's Disease",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "intestinal epithelial tight junction and barrier function structure", "new_breaks": 58, "relations": 520, "criticality": "HIGH"},
+        {"structure": "innate immune pattern recognition and bacterial clearance structure", "new_breaks": 62, "relations": 440, "criticality": "CRITICAL"},
+        {"structure": "mucosal inflammatory cytokine and macrophage infiltration structure", "new_breaks": 65, "relations": 480, "criticality": "CRITICAL"},
+        {"structure": "intestinal fibroblast proliferation and fibrosis structure", "new_breaks": 48, "relations": 350, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Hepatic Cirrhosis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "hepatic stellate cell activation and collagen deposition structure", "new_breaks": 68, "relations": 520, "criticality": "CRITICAL"},
+        {"structure": "hepatocyte synthetic function and detoxification capacity structure", "new_breaks": 72, "relations": 580, "criticality": "CRITICAL"},
+        {"structure": "hepatic portal venous pressure and collateral formation structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "renal sodium retention and ascites formation structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Chronic Kidney Disease",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "glomerular filtration barrier and podocyte structure", "new_breaks": 62, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "renal tubular reabsorption and secretion structure", "new_breaks": 55, "relations": 480, "criticality": "HIGH"},
+        {"structure": "erythropoietin production and red blood cell generation structure", "new_breaks": 38, "relations": 320, "criticality": "MODERATE"},
+        {"structure": "renal osteodystrophy and mineral metabolism structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "COPD",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "bronchial smooth muscle contraction and bronchoconstriction structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "pulmonary emphysematous alveolar destruction structure", "new_breaks": 68, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "mucociliary clearance and cough reflex effectiveness structure", "new_breaks": 48, "relations": 380, "criticality": "HIGH"},
+        {"structure": "pulmonary vascular resistance and right ventricular strain structure", "new_breaks": 44, "relations": 360, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Asthma",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "bronchial smooth muscle contraction and bronchoconstriction structure", "new_breaks": 48, "relations": 420, "criticality": "HIGH"},
+        {"structure": "airway epithelial barrier and mucus hypersecretion structure", "new_breaks": 42, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "Th2 lymphocyte and IgE-mediated immune response structure", "new_breaks": 52, "relations": 440, "criticality": "HIGH"},
+        {"structure": "mast cell degranulation and inflammatory mediator release structure", "new_breaks": 45, "relations": 360, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Rheumatoid Arthritis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "synovial fibroblast and macrophage inflammatory activation structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "articular cartilage matrix degradation and erosion structure", "new_breaks": 62, "relations": 520, "criticality": "CRITICAL"},
+        {"structure": "bone osteoclast activation and subchondral bone loss structure", "new_breaks": 55, "relations": 450, "criticality": "HIGH"},
+        {"structure": "T-cell and B-cell autoreactive immune response structure", "new_breaks": 52, "relations": 400, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Osteoarthritis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "articular cartilage matrix degradation and erosion structure", "new_breaks": 52, "relations": 480, "criticality": "HIGH"},
+        {"structure": "synovial fluid lubrication and viscosity structure", "new_breaks": 38, "relations": 320, "criticality": "MODERATE"},
+        {"structure": "subchondral bone sclerosis and cyst formation structure", "new_breaks": 42, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "synovial inflammation and inflammatory mediator production structure", "new_breaks": 35, "relations": 300, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Osteoporosis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "bone osteoclast-mediated bone resorption structure", "new_breaks": 58, "relations": 520, "criticality": "HIGH"},
+        {"structure": "bone osteoblast differentiation and mineralization structure", "new_breaks": 52, "relations": 480, "criticality": "HIGH"},
+        {"structure": "parathyroid hormone and vitamin D signaling structure", "new_breaks": 45, "relations": 400, "criticality": "MODERATE"},
+        {"structure": "bone microarchitecture and trabecular connectivity structure", "new_breaks": 48, "relations": 420, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Thyroid Dysfunction",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "thyroid hormone synthesis and release structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "thyroid-stimulating hormone and negative feedback regulation structure", "new_breaks": 42, "relations": 360, "criticality": "MODERATE"},
+        {"structure": "cellular thyroid hormone receptor and transcriptional activation structure", "new_breaks": 48, "relations": 420, "criticality": "MODERATE"},
+        {"structure": "thyroid peroxidase enzyme and iodine incorporation structure", "new_breaks": 35, "relations": 300, "criticality": "MINOR"}
+      ]
+    },
+    {
+      "generic_name": "Hashimoto's Thyroiditis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "thyroid peroxidase autoantigen recognition structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "thyroid-infiltrating T-cell and B-cell immune response structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "thyroid hormone synthesis and release structure", "new_breaks": 55, "relations": 400, "criticality": "HIGH"},
+        {"structure": "thyroid follicular destruction and fibrosis structure", "new_breaks": 48, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Graves' Disease",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "TSH receptor autoantigen recognition and activation structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "thyroid-infiltrating B-cell and plasma cell immune response structure", "new_breaks": 52, "relations": 400, "criticality": "HIGH"},
+        {"structure": "thyroid hormone synthesis and excessive release structure", "new_breaks": 62, "relations": 480, "criticality": "CRITICAL"},
+        {"structure": "orbital fibroblast proliferation and thyroid eye disease structure", "new_breaks": 42, "relations": 320, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Sepsis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "systemic inflammatory response and cytokine storm structure", "new_breaks": 78, "relations": 640, "criticality": "CRITICAL"},
+        {"structure": "vascular endothelial permeability and capillary leak syndrome structure", "new_breaks": 72, "relations": 600, "criticality": "CRITICAL"},
+        {"structure": "cardiac myocyte contractility depression and cardiogenic shock structure", "new_breaks": 68, "relations": 560, "criticality": "CRITICAL"},
+        {"structure": "renal acute tubular necrosis and oliguria structure", "new_breaks": 62, "relations": 520, "criticality": "CRITICAL"}
+      ]
+    },
+    {
+      "generic_name": "Depression",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "monoamine neurotransmitter synthesis and reuptake structure", "new_breaks": 48, "relations": 420, "criticality": "MODERATE"},
+        {"structure": "hypothalamic-pituitary-adrenal axis and cortisol regulation structure", "new_breaks": 52, "relations": 460, "criticality": "HIGH"},
+        {"structure": "hippocampal neurogenesis and memory formation structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "amygdala fear processing and emotional regulation structure", "new_breaks": 42, "relations": 360, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Anxiety Disorder",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "amygdala fear conditioning and threat detection structure", "new_breaks": 52, "relations": 440, "criticality": "HIGH"},
+        {"structure": "prefrontal cortex inhibitory control and emotion regulation structure", "new_breaks": 48, "relations": 420, "criticality": "HIGH"},
+        {"structure": "GABA-mediated inhibitory neurotransmission structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "sympathetic nervous system arousal and stress response structure", "new_breaks": 42, "relations": 360, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Bipolar Disorder",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "monoamine neurotransmitter dysregulation structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "anterior cingulate cortex emotion processing structure", "new_breaks": 52, "relations": 440, "criticality": "HIGH"},
+        {"structure": "circadian rhythm generation and entrainment structure", "new_breaks": 48, "relations": 400, "criticality": "MODERATE"},
+        {"structure": "inositol phosphate signaling and neuroprotection structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "PTSD",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "amygdala hyperresponsiveness and threat bias structure", "new_breaks": 55, "relations": 460, "criticality": "HIGH"},
+        {"structure": "prefrontal-amygdala inhibitory connectivity structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "hippocampal fear memory consolidation structure", "new_breaks": 48, "relations": 400, "criticality": "MODERATE"},
+        {"structure": "hypothalamic-pituitary-adrenal axis dysregulation structure", "new_breaks": 50, "relations": 440, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "ADHD",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "dopamine synthesis and reuptake in prefrontal cortex structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "executive function and impulse control network structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "attention and salience detection mechanism structure", "new_breaks": 48, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "working memory and temporal processing structure", "new_breaks": 45, "relations": 360, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Autism Spectrum Disorder",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "synaptic excitatory-inhibitory balance structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "social brain network and theory of mind structure", "new_breaks": 55, "relations": 460, "criticality": "HIGH"},
+        {"structure": "sensory processing and integration structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "attention to social cues and facial recognition structure", "new_breaks": 48, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Chronic Inflammation",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "NF-kappa B inflammatory transcription factor activation structure", "new_breaks": 62, "relations": 520, "criticality": "CRITICAL"},
+        {"structure": "IL-6, TNF-alpha and IL-1 beta cytokine production structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "oxidative stress and reactive oxygen species generation structure", "new_breaks": 55, "relations": 450, "criticality": "HIGH"},
+        {"structure": "tissue-resident macrophage activation and infiltration structure", "new_breaks": 50, "relations": 400, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Fibromyalgia",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "central pain amplification and sensitization structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "substance P and neurotrophic factor dysregulation structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "sleep-wake cycle architecture and slow-wave sleep structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "hypothalamic-pituitary-adrenal axis and cortisol dysregulation structure", "new_breaks": 48, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Chronic Fatigue Syndrome",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "mitochondrial energy production and ATP synthesis structure", "new_breaks": 62, "relations": 520, "criticality": "CRITICAL"},
+        {"structure": "immune system activation and cytokine dysregulation structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "hypothalamic-pituitary-adrenal axis dysfunction structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "autonomic nervous system dysregulation structure", "new_breaks": 50, "relations": 400, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Sleep Apnea",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "upper airway muscle tone and pharyngeal collapse structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "central respiratory drive and carbon dioxide chemoreception structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "arousal response and sleep fragmentation structure", "new_breaks": 48, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "hypoxemia and nocturnal oxygen desaturation structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Insomnia",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "sleep-wake homeostasis and circadian pacemaker structure", "new_breaks": 48, "relations": 400, "criticality": "MODERATE"},
+        {"structure": "GABA-mediated sleep initiation mechanism structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "orexin-mediated wakefulness promotion structure", "new_breaks": 42, "relations": 360, "criticality": "MODERATE"},
+        {"structure": "melatonin synthesis and circadian entrainment structure", "new_breaks": 40, "relations": 340, "criticality": "MINOR"}
+      ]
+    },
+    {
+      "generic_name": "Migraine Headache",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "trigeminal nerve sensory neuron excitability structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "cerebral vascular smooth muscle contraction structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "meningeal neuroinflammation and neuropeptide release structure", "new_breaks": 50, "relations": 400, "criticality": "MODERATE"},
+        {"structure": "serotonin and dopamine neurotransmitter dysregulation structure", "new_breaks": 48, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Parkinson's Disease",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "dopaminergic substantia nigra neurodegeneration structure", "new_breaks": 68, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "alpha-synuclein aggregation and Lewy body formation structure", "new_breaks": 65, "relations": 520, "criticality": "CRITICAL"},
+        {"structure": "basal ganglia motor control and movement initiation structure", "new_breaks": 62, "relations": 500, "criticality": "CRITICAL"},
+        {"structure": "mitochondrial dysfunction and oxidative stress structure", "new_breaks": 58, "relations": 460, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Alzheimer's Disease",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "amyloid-beta plaque formation and aggregation structure", "new_breaks": 72, "relations": 580, "criticality": "CRITICAL"},
+        {"structure": "tau neurofibrillary tangle formation structure", "new_breaks": 68, "relations": 560, "criticality": "CRITICAL"},
+        {"structure": "hippocampal neuron loss and synaptic degeneration structure", "new_breaks": 65, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "neuroinflammation and microglial activation structure", "new_breaks": 62, "relations": 500, "criticality": "CRITICAL"}
+      ]
+    },
+    {
+      "generic_name": "Multiple Sclerosis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "myelin sheath autoimmune destruction structure", "new_breaks": 68, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "CNS blood-brain barrier disruption and immune infiltration structure", "new_breaks": 65, "relations": 520, "criticality": "CRITICAL"},
+        {"structure": "oligodendrocyte dysfunction and remyelination failure structure", "new_breaks": 62, "relations": 500, "criticality": "CRITICAL"},
+        {"structure": "axonal degeneration and permanent neurological disability structure", "new_breaks": 58, "relations": 460, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Lupus (SLE)",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "anti-nuclear antibody and immune complex deposition structure", "new_breaks": 62, "relations": 500, "criticality": "CRITICAL"},
+        {"structure": "complement cascade activation and C3/C4 consumption structure", "new_breaks": 58, "relations": 460, "criticality": "HIGH"},
+        {"structure": "glomerulonephritis and lupus nephritis structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "systemic vasculitis and tissue damage structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Psoriasis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "keratinocyte hyperproliferation and epidermal thickening structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "Th17 T-cell and IL-17 cytokine-mediated inflammation structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "dermal vasodilation and capillary tortuosity structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "epidermal barrier function and transepidermal water loss structure", "new_breaks": 42, "relations": 360, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Eczema (Atopic Dermatitis)",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "epidermal barrier disruption and filaggrin deficiency structure", "new_breaks": 48, "relations": 400, "criticality": "MODERATE"},
+        {"structure": "Th2 lymphocyte and IgE-mediated immune response structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "keratinocyte tight junction and ceramide depletion structure", "new_breaks": 50, "relations": 410, "criticality": "MODERATE"},
+        {"structure": "pruritus-related neural sensitization and itch response structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Acne Vulgaris",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "sebaceous gland sebum overproduction structure", "new_breaks": 35, "relations": 300, "criticality": "MODERATE"},
+        {"structure": "follicular keratinocyte hyperkeratinization structure", "new_breaks": 38, "relations": 320, "criticality": "MODERATE"},
+        {"structure": "Cutibacterium acnes proliferation and colonization structure", "new_breaks": 42, "relations": 360, "criticality": "MODERATE"},
+        {"structure": "sebaceous gland inflammation and cytokine production structure", "new_breaks": 40, "relations": 340, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "IBS (Irritable Bowel Syndrome)",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "intestinal motility dysregulation and smooth muscle dysfunction structure", "new_breaks": 48, "relations": 400, "criticality": "MODERATE"},
+        {"structure": "visceral hypersensitivity and pain perception amplification structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "intestinal barrier permeability and tight junction dysfunction structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "gut microbiota dysbiosis and bacterial translocation structure", "new_breaks": 48, "relations": 390, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "SIBO (Small Intestinal Bacterial Overgrowth)",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "small intestinal bacterial population and growth structure", "new_breaks": 50, "relations": 410, "criticality": "MODERATE"},
+        {"structure": "brush border enzyme dysfunction and malabsorption structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "intestinal gas production and bloating symptom generation structure", "new_breaks": 42, "relations": 360, "criticality": "MODERATE"},
+        {"structure": "intestinal barrier permeability and LPS translocation structure", "new_breaks": 48, "relations": 390, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Polycystic Ovary Syndrome",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "ovarian androgen excess and hyperandrogenism structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "insulin resistance and hyperinsulinemia structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "ovulatory dysfunction and follicular arrest structure", "new_breaks": 48, "relations": 390, "criticality": "MODERATE"},
+        {"structure": "chronic low-grade inflammation and LH/FSH dysregulation structure", "new_breaks": 50, "relations": 410, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Endometriosis",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "ectopic endometrial growth and implantation structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "angiogenesis and neovascularization in lesions structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "peritoneal inflammation and macrophage infiltration structure", "new_breaks": 50, "relations": 410, "criticality": "MODERATE"},
+        {"structure": "pain sensitization and innervation of lesions structure", "new_breaks": 48, "relations": 390, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Menopause",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "ovarian estrogen and progesterone production decline structure", "new_breaks": 48, "relations": 400, "criticality": "MODERATE"},
+        {"structure": "hypothalamic thermoregulation and hot flash generation structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"},
+        {"structure": "vaginal epithelial atrophy and lubrication loss structure", "new_breaks": 40, "relations": 340, "criticality": "MINOR"},
+        {"structure": "bone osteoclast activation and rapid bone loss structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Erectile Dysfunction",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "penile vascular endothelial dysfunction and vasodilation failure structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "nitric oxide-mediated smooth muscle relaxation impairment structure", "new_breaks": 50, "relations": 410, "criticality": "MODERATE"},
+        {"structure": "cavernosal trabecular smooth muscle and corporal function structure", "new_breaks": 48, "relations": 390, "criticality": "MODERATE"},
+        {"structure": "autonomic sympathetic tone and ejaculation control structure", "new_breaks": 42, "relations": 360, "criticality": "MINOR"}
+      ]
+    },
+    {
+      "generic_name": "Gout",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "monosodium urate crystal formation and deposition structure", "new_breaks": 50, "relations": 410, "criticality": "MODERATE"},
+        {"structure": "NLRP3 inflammasome activation and IL-1 beta secretion structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "neutrophil recruitment and joint inflammation structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "uric acid renal reabsorption and serum hyperuricemia structure", "new_breaks": 45, "relations": 380, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Neuropathic Pain",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "nociceptor sensitization and abnormal firing patterns structure", "new_breaks": 58, "relations": 480, "criticality": "HIGH"},
+        {"structure": "central sensitization and dorsal horn pain amplification structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "peripheral nerve regeneration and sodium channel abnormality structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "glial cell activation and inflammatory cytokine production structure", "new_breaks": 50, "relations": 410, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Metabolic Syndrome",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "insulin resistance and hyperinsulinemia structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "adipose tissue inflammation and dysfunction structure", "new_breaks": 58, "relations": 460, "criticality": "HIGH"},
+        {"structure": "hepatic steatosis and fatty liver disease structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "vascular endothelial dysfunction and atherosclerosis acceleration structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "NAFLD (Fatty Liver Disease)",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "hepatic triglyceride accumulation and lipid droplet formation structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "hepatocyte mitochondrial dysfunction and oxidative stress structure", "new_breaks": 58, "relations": 460, "criticality": "HIGH"},
+        {"structure": "hepatic stellate cell activation and hepatic fibrosis structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "intestinal barrier dysfunction and lipopolysaccharide translocation structure", "new_breaks": 48, "relations": 390, "criticality": "MODERATE"}
+      ]
+    },
+    {
+      "generic_name": "Acute Liver Injury",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "hepatocyte apoptosis and necrosis structure", "new_breaks": 68, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "hepatic metabolic enzyme dysfunction and detoxification failure structure", "new_breaks": 62, "relations": 500, "criticality": "CRITICAL"},
+        {"structure": "hepatic regeneration and stellate cell response structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "coagulation cascade activation and DIC predisposition structure", "new_breaks": 58, "relations": 460, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Acute Kidney Injury",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "renal tubular epithelial cell necrosis and apoptosis structure", "new_breaks": 68, "relations": 540, "criticality": "CRITICAL"},
+        {"structure": "glomerular filtration rate acute decline structure", "new_breaks": 65, "relations": 520, "criticality": "CRITICAL"},
+        {"structure": "tubular obstruction by cast formation structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "renal ischemia and reperfusion injury structure", "new_breaks": 62, "relations": 500, "criticality": "CRITICAL"}
+      ]
+    },
+    {
+      "generic_name": "Celiac Disease",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "intestinal epithelial barrier damage and villous atrophy structure", "new_breaks": 62, "relations": 500, "criticality": "CRITICAL"},
+        {"structure": "gluten-specific T-cell and B-cell immune response structure", "new_breaks": 58, "relations": 460, "criticality": "HIGH"},
+        {"structure": "tissue transglutaminase cross-linked antigen recognition structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "intestinal intraepithelial lymphocyte infiltration structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"}
+      ]
+    },
+    {
+      "generic_name": "Lyme Disease",
+      "chemical_formula": "condition",
+      "category": "Condition",
+      "target_structures": [
+        {"structure": "Borrelia burgdorferi spirochete infection and dissemination structure", "new_breaks": 55, "relations": 440, "criticality": "HIGH"},
+        {"structure": "joint synovitis and arthritis inflammation structure", "new_breaks": 52, "relations": 420, "criticality": "HIGH"},
+        {"structure": "neuroborreliosis and peripheral nerve inflammation structure", "new_breaks": 50, "relations": 410, "criticality": "MODERATE"},
+        {"structure": "carditis and conduction system dysfunction structure", "new_breaks": 48, "relations": 390, "criticality": "MODERATE"}
+      ]
+    }
+  ]
+}
