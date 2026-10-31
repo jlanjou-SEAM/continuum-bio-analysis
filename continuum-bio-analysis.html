@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="seam-bio-api" content="">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Continuum Bio Analysis</title>
@@ -600,7 +601,35 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:5000';
+        // A public page must never assume the visitor runs the analysis server.
+        const configuredApi = new URLSearchParams(location.search).get('api') ||
+            document.querySelector('meta[name="seam-bio-api"]').content;
+        const localPage = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+        let API_URL = localPage ? 'http://localhost:5000' : '';
+        let backendReady = false;
+        if (configuredApi) {
+            try {
+                const url = new URL(configuredApi);
+                if (url.protocol !== 'https:' && !(localPage && url.protocol === 'http:')) {
+                    throw new Error('The public analysis service requires HTTPS.');
+                }
+                API_URL = url.href.replace(/\/$/, '');
+            } catch (e) { console.error('Invalid analysis service address:', e.message); }
+        }
+        async function readJSON(url) {
+            const response = await fetch(url, {signal: AbortSignal.timeout(10000)});
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+        }
+        function showServiceNotice(message) {
+            const content = document.getElementById('resultsContent');
+            content.replaceChildren();
+            const heading = document.createElement('h3');
+            heading.textContent = 'Analysis service unavailable';
+            const detail = document.createElement('p');
+            detail.textContent = message;
+            content.append(heading, detail);
+        }
         let allCompounds = [];
         let selectedCompounds = new Set();
         let categories = new Set();
@@ -608,32 +637,33 @@
 
         async function init() {
             try {
-                // Check if backend is running
-                const health = await fetch(`${API_URL}/health`);
-                if (!health.ok) {
-                    showError('Backend not responding. Start with: python seam-server-v2.py');
-                    return;
-                }
-
-                // Load compounds
-                const response = await fetch(`${API_URL}/compounds`);
-                const data = await response.json();
-                allCompounds = data.compounds;
-
-                // Populate sections
-                renderSections();
-
-                // Open all sections by default
+                const catalog = await readJSON('./SEAM_common_drugs_supplements_choice_registry_v1.json');
+                allCompounds = catalog.compounds || [];
+                await renderSections();
                 ['pharma', 'otc', 'conditions'].forEach(sec => {
-                    const content = document.getElementById(sec + '-section');
-                    if (content) content.classList.add('open');
+                    document.getElementById(sec + '-section')?.classList.add('open');
                     const toggle = document.getElementById(sec + '-toggle');
                     if (toggle) toggle.textContent = '▲';
                 });
-
             } catch (e) {
-                console.error('Init error:', e);
-                showError(`Cannot connect to backend at ${API_URL}. Make sure it's running.`);
+                showError(`Unable to load the public catalog: ${e.message}`);
+                return;
+            }
+            if (!API_URL) {
+                showServiceNotice('The compound and condition catalogs are available. Online analysis needs a hosted analysis service; no service address is configured for this site.');
+                updateSelectedDisplay();
+                return;
+            }
+            try {
+                const health = await readJSON(`${API_URL}/health`);
+                if (health.status !== 'ok' || health.runtime_configured === false || health.runner_available === false) {
+                    throw new Error('The analysis service is not ready.');
+                }
+                backendReady = true;
+                updateSelectedDisplay();
+            } catch (e) {
+                showServiceNotice('The catalog is available, but the configured analysis service is not responding or its runtime is unavailable.');
+                updateSelectedDisplay();
             }
         }
 
@@ -666,8 +696,7 @@
             // Fetch conditions from server
             let conditions = [];
             try {
-                const response = await fetch(`${API_URL}/conditions`);
-                const data = await response.json();
+                const data = await readJSON('./conditions_database_expanded.json');
                 conditions = data.conditions || [];
             } catch (e) {
                 console.error('Could not load conditions:', e);
@@ -784,7 +813,7 @@
             const list = document.getElementById('selectedList');
             const count = document.getElementById('selectionCount');
             count.textContent = selectedCompounds.size;
-            document.getElementById('analyzeBtn').disabled = selectedCompounds.size === 0;
+            document.getElementById('analyzeBtn').disabled = !backendReady || selectedCompounds.size === 0;
 
             if (selectedCompounds.size === 0) {
                 list.innerHTML = '<div class="empty-state" style="font-size: 12px;">No items selected</div>';
@@ -817,7 +846,7 @@
         }
 
         async function runAnalysis() {
-            if (selectedCompounds.size === 0) return;
+            if (!backendReady || selectedCompounds.size === 0) return;
 
             const selected = Array.from(selectedCompounds).map(name => {
                 // Try to find in allCompounds first
