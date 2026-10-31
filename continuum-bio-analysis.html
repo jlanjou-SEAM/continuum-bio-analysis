@@ -535,7 +535,7 @@
                         <span id="conditions-toggle">▼</span>
                     </div>
                     <div id="conditions-section" class="section-content">
-                        <div class="items-list" id="conditionsList"></div>
+                        <p style="padding:8px; color:var(--text-secondary);">Reference catalog. The runtime evaluates all 5,734 condition rows; these labels are not additional analysis inputs.</p><div class="items-list" id="conditionsList"></div>
                     </div>
                 </div>
 
@@ -607,6 +607,8 @@
         const localPage = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
         let API_URL = localPage ? 'http://localhost:5000' : '';
         let backendReady = false;
+        let analysisRunning = false;
+        const exposures = new Map();
         if (configuredApi) {
             try {
                 const url = new URL(configuredApi);
@@ -656,10 +658,11 @@
             }
             try {
                 const health = await readJSON(`${API_URL}/health`);
-                if (health.status !== 'ok' || health.runtime_configured === false || health.runner_available === false) {
+                if (health.status !== 'ok' || health.runtime_configured !== true || health.runner_available !== true || health.result_schema !== 'SEAM_BIO_NATIVE_RESULTS_V1') {
                     throw new Error('The analysis service is not ready.');
                 }
                 backendReady = true;
+                document.getElementById('resultsContent').textContent = 'Select a compound and enter its dose and interval. Each compound is evaluated independently against the retained reference snapshot.';
                 updateSelectedDisplay();
             } catch (e) {
                 showServiceNotice('The catalog is available, but the configured analysis service is not responding or its runtime is unavailable.');
@@ -716,7 +719,8 @@
                 const div = document.createElement('div');
                 div.className = 'section-item' + (selectedCompounds.has(item.generic_name) ? ' selected' : '');
                 div.textContent = item.generic_name;
-                div.onclick = () => toggleItemSelection(item);
+                if (containerId !== 'conditionsList') div.onclick = () => toggleItemSelection(item);
+                else div.style.cursor = 'default';
                 container.appendChild(div);
             });
         }
@@ -725,6 +729,7 @@
             if (selectedCompounds.has(item.generic_name)) {
                 selectedCompounds.delete(item.generic_name);
             } else {
+                if (selectedCompounds.size >= 10) { showError('Select at most 10 compounds.'); return; }
                 selectedCompounds.add(item.generic_name);
             }
             updateSelectedDisplay();
@@ -809,23 +814,56 @@
             renderCompoundsList();
         }
 
+        function escapeHTML(value) {
+            const span = document.createElement('span');
+            span.textContent = String(value ?? '');
+            return span.innerHTML;
+        }
+        function updateAnalyzeButton() {
+            const ready = selectedCompounds.size && [...selectedCompounds].every(name => {
+                const value = exposures.get(name);
+                return value?.dose.trim() && value?.interval.trim();
+            });
+            document.getElementById('analyzeBtn').disabled = !backendReady || analysisRunning || !ready;
+        }
         function updateSelectedDisplay() {
             const list = document.getElementById('selectedList');
-            const count = document.getElementById('selectionCount');
-            count.textContent = selectedCompounds.size;
-            document.getElementById('analyzeBtn').disabled = !backendReady || selectedCompounds.size === 0;
-
-            if (selectedCompounds.size === 0) {
-                list.innerHTML = '<div class="empty-state" style="font-size: 12px;">No items selected</div>';
-            } else {
-                const selected = Array.from(selectedCompounds).sort();
-                list.innerHTML = selected.map(name =>
-                    `<div class="compound-tag">
-                        <span>${name}</span>
-                        <span class="remove" onclick="toggleCompound('${name}', false)">×</span>
-                    </div>`
-                ).join('');
+            document.getElementById('selectionCount').textContent = selectedCompounds.size;
+            list.replaceChildren();
+            if (!selectedCompounds.size) list.textContent = 'No compounds selected';
+            for (const name of [...selectedCompounds].sort()) {
+                if (!exposures.has(name)) exposures.set(name, {dose:'', interval:''});
+                const values = exposures.get(name);
+                const card = document.createElement('div');
+                card.style.cssText = 'padding:10px; border:1px solid var(--border); width:100%;';
+                const heading = document.createElement('strong');
+                heading.textContent = name;
+                card.append(heading);
+                for (const [key,title,example] of [
+                    ['dose','Dose per administration','e.g. 40 mg'],
+                    ['interval','Interval','e.g. once daily']
+                ]) {
+                    const label = document.createElement('label');
+                    label.style.cssText = 'display:block; margin-top:8px;';
+                    label.textContent = title;
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 160;
+                    input.placeholder = example;
+                    input.value = values[key];
+                    input.setAttribute('aria-label',name+' '+title);
+                    input.style.cssText = 'display:block; width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
+                    input.oninput = () => { values[key] = input.value; updateAnalyzeButton(); };
+                    label.append(input);
+                    card.append(label);
+                }
+                const remove = document.createElement('button');
+                remove.textContent = 'Remove';
+                remove.onclick = () => { selectedCompounds.delete(name); updateSelectedDisplay(); renderSections(); };
+                card.append(remove);
+                list.append(card);
             }
+            updateAnalyzeButton();
         }
 
         function filterCompounds() {
@@ -846,61 +884,40 @@
         }
 
         async function runAnalysis() {
-            if (!backendReady || selectedCompounds.size === 0) return;
-
-            const selected = Array.from(selectedCompounds).map(name => {
-                // Try to find in allCompounds first
-                let compound = allCompounds.find(c => c.generic_name === name);
-                // If not found, create a condition item
-                if (!compound) {
-                    compound = { generic_name: name, chemical_formula: 'condition', category: 'Condition' };
-                }
-                return compound;
-            }).filter(c => c);
-
-            showLoading();
-
+            if (!backendReady || analysisRunning || !selectedCompounds.size) return;
+            analysisRunning = true;
+            updateAnalyzeButton();
             try {
-                const response = await fetch(`${API_URL}/analyze`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ compounds: selected })
+                const compounds = [...selectedCompounds].map(name => {
+                    const item = allCompounds.find(c => c.generic_name === name);
+                    const input = exposures.get(name);
+                    if (!item || !input?.dose.trim() || !input?.interval.trim())
+                        throw new Error('Each compound requires a dose and interval.');
+                    return {compound:item.chemical_formula, dose:input.dose, interval:input.interval};
                 });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-
+                showLoading();
+                const response = await fetch(API_URL+'/analyze', {
+                    method:'POST', headers:{'Content-Type':'application/json'},
+                    signal:AbortSignal.timeout(15000), body:JSON.stringify({compounds})
+                });
                 const data = await response.json();
-                const taskId = data.task_id;
-
-                // Poll for results
-                pollResults(taskId);
-            } catch (e) {
-                showError(`Analysis failed: ${e.message}`);
-            }
-        }
-
-        function pollResults(taskId) {
-            const poll = setInterval(async () => {
-                try {
-                    const response = await fetch(`${API_URL}/results/${taskId}`);
-                    const task = await response.json();
-
-                    if (task.status === 'completed') {
-                        clearInterval(poll);
-                        displayResults(task.result);
-                    } else if (task.status === 'failed') {
-                        clearInterval(poll);
-                        showError(`Analysis failed: ${task.error}`);
-                    } else {
-                        updateProgress(task.progress);
-                    }
-                } catch (e) {
-                    clearInterval(poll);
-                    showError(`Error polling results: ${e.message}`);
+                if (!response.ok) throw new Error(data.error || ('HTTP '+response.status));
+                if (!data.task_id) throw new Error('The service returned no task identifier.');
+                const deadline = Date.now()+660000;
+                while (Date.now()<deadline) {
+                    await new Promise(resolve => setTimeout(resolve,1000));
+                    const task = await readJSON(API_URL+'/results/'+encodeURIComponent(data.task_id));
+                    if (task.status==='completed') { displayResults(task.result); return; }
+                    if (['failed','cancelled'].includes(task.status)) throw new Error(task.error || task.status);
+                    updateProgress(task.progress || 0);
                 }
-            }, 500);
+                throw new Error('Analysis timed out; no completed result was received.');
+            } catch (error) {
+                showError('Analysis failed: '+error.message);
+            } finally {
+                analysisRunning = false;
+                updateAnalyzeButton();
+            }
         }
 
         function showLoading() {
@@ -926,153 +943,55 @@
             }
         }
 
-        function displayComparativeResults(data) {
-            let html = '';
-            const differential = data.differential || {};
-            const total = data.total || {};
-
-            // Header
-            html += `
-                <div style="padding: 12px; background: var(--bg-tertiary); border-radius: 6px; margin-bottom: 12px; border-left: 3px solid var(--primary);">
-                    <div style="font-size: 11px; color: var(--text-secondary); font-family: 'JetBrains Mono';">
-                        <strong>Lock:</strong> ${data.lock_sha256 ? data.lock_sha256.substring(0, 24) + '...' : 'N/A'}<br>
-                        <strong>Database:</strong> ${data.rows} rows, ${data.structures} structures<br>
-                        <strong>Total Impacts:</strong> ${total.total_impacts || 0}
-                    </div>
-                </div>
-            `;
-
-            // DIFFERENTIAL section
-            if (differential.structures && differential.structures.length > 0) {
-                html += `
-                    <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-primary); border-radius: 6px; border: 2px solid #FB923C;">
-                        <div style="font-weight: 600; color: #FB923C; margin-bottom: 8px; font-size: 13px;">
-                            ➕ Additional Impact from Your Compounds (${differential.new_impacts || 0} new)
-                        </div>
-                        <div style="display: flex; flex-direction: column; gap: 4px;">
-                            ${(differential.structures || []).map(s => `
-                                <div style="padding: 4px 6px; background: var(--bg-secondary); border-radius: 3px; font-size: 10px; color: #FB923C;">
-                                    + ${s.structure} <span style="opacity: 0.6;">${s.new_breaks}/${s.relations}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // TOTAL section
-            html += `
-                <div style="padding: 12px; background: var(--bg-primary); border-radius: 6px; border: 2px solid #EF4444;">
-                    <div style="font-weight: 600; color: #EF4444; margin-bottom: 8px; font-size: 13px;">
-                        🔴 Body Impact (${total.total_impacts || 0} complications)
-                    </div>
-                    <div style="font-size: 10px; color: var(--text-secondary); margin-bottom: 8px;">
-                        Severity: ${total.tiers ? Object.entries(total.tiers).map(([k,v]) => `<span style="color: ${k === 'CRITICAL' ? '#EF4444' : k === 'HIGH' ? '#F87171' : k === 'MODERATE' ? '#FB923C' : '#FCD34D'}">${k}:${v}</span>`).join(' | ') : 'N/A'}
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        ${(total.structures || []).map(s => `
-                            <div style="padding: 4px 6px; background: var(--bg-secondary); border-radius: 3px; font-size: 10px; border-left: 2px solid ${
-                                s.criticality === 'CRITICAL' ? '#EF4444' : s.criticality === 'HIGH' ? '#F87171' : s.criticality === 'MODERATE' ? '#FB923C' : '#FCD34D'
-                            };">
-                                ${s.structure} <span style="opacity: 0.6;">${s.new_breaks}/${s.relations} • ${s.criticality}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-
-            return html;
-        }
-
         function displayResults(data) {
+            if (data?.schema!=='SEAM_BIO_NATIVE_RESULTS_V1' || !Array.isArray(data.results) ||
+                !data.results.length || data.results.some(r => r.complete!==true || r.all_rows?.length!==5734))
+                throw new Error('Incomplete or incompatible engine result.');
             const content = document.getElementById('resultsContent');
-            let html = '<div style="font-size: 12px;">';
-
-            // Check if this is comparative analysis
-            if (data.analysis_mode === 'comparative' && data.baseline) {
-                html += displayComparativeResults(data);
-                html += '</div>';
-                content.innerHTML = html;
-                return;
+            content.innerHTML = '<p>Retained reference snapshot · Independent compound runs</p>';
+            for (const result of data.results) {
+                const panel = document.createElement('section');
+                panel.style.cssText = 'padding:16px; margin-bottom:16px; background:var(--bg-primary); border:1px solid var(--border);';
+                const counts = result.counts;
+                panel.innerHTML = '<h3>'+escapeHTML(result.compound_query)+'</h3><p>'+
+                    escapeHTML(result.input.dose)+' · '+escapeHTML(result.input.interval)+'</p><p>'+
+                    escapeHTML(result.analysis_notice)+'</p><p><strong>Rows evaluated:</strong> '+
+                    escapeHTML(counts.condition_states_evaluated)+' · <strong>Active transitions:</strong> '+
+                    escapeHTML(counts.rows_with_relation_transition)+' · <strong>Rows with new breaks:</strong> '+
+                    escapeHTML(counts.rows_with_new_breaks)+' · <strong>Rows with restorations:</strong> '+
+                    escapeHTML(counts.rows_with_restoration)+'</p>';
+                const effects = [...result.primary_effects,...result.secondary_effects];
+                if (!effects.length) panel.append(document.createTextNode('No active structural transitions for these inputs.'));
+                for (const row of effects) {
+                    const entry = document.createElement('div');
+                    entry.style.cssText = 'padding:10px; margin-top:8px; background:var(--bg-secondary); border-left:3px solid var(--primary);';
+                    entry.innerHTML = '<strong>'+escapeHTML(row.effect_role)+': '+escapeHTML(row.structure)+
+                        '</strong><p>'+escapeHTML(row.source_term)+'</p><p>Restored: '+escapeHTML(row.restored_relations)+
+                        ' · New breaks: '+escapeHTML(row.new_breaks)+' · Residual: '+escapeHTML(row.residual_broken_relations)+
+                        ' · Structural criticality: '+escapeHTML(row.criticality)+'</p>';
+                    panel.append(entry);
+                }
+                const download = document.createElement('button');
+                download.className = 'btn';
+                download.textContent = 'Download complete engine result (JSON)';
+                download.onclick = () => {
+                    const url = URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{type:'application/json'}));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'bio-engine-result.json';
+                    link.click();
+                    setTimeout(() => URL.revokeObjectURL(url),1000);
+                };
+                panel.append(download);
+                content.append(panel);
             }
-
-            // Show lock hash and metadata
-            html += `
-                <div style="padding: 12px; background: var(--bg-tertiary); border-radius: 6px; margin-bottom: 12px; border-left: 3px solid var(--primary);">
-                    <div style="font-size: 11px; color: var(--text-secondary); font-family: 'JetBrains Mono'; word-break: break-all;">
-                        <strong>Lock:</strong> ${data.lock_sha256 ? data.lock_sha256.substring(0, 24) + '...' : 'N/A'}<br>
-                        <strong>Database:</strong> ${data.rows} rows, ${data.structures} structures<br>
-                        <strong>Items Analyzed:</strong> ${data.compounds_analyzed} compound(s)<br>
-                        <strong>Total Impacts:</strong> ${data.total_structural_impacts || 0} structural changes
-                    </div>
-                </div>
-            `;
-
-            // Show aggregate severity breakdown
-            if (data.aggregate_tiers) {
-                html += `
-                    <div style="padding: 10px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 12px; border: 1px solid var(--border);">
-                        <div style="font-weight: 600; margin-bottom: 6px; font-size: 12px; color: var(--primary);">Severity Summary</div>
-                        <div style="display: flex; gap: 6px; flex-wrap: wrap; font-size: 11px;">
-                            ${['CRITICAL', 'HIGH', 'MODERATE', 'MINOR'].map(tier => `
-                                <span style="background: var(--bg-primary); padding: 3px 8px; border-radius: 3px; color: ${
-                                    tier === 'CRITICAL' ? '#EF4444' :
-                                    tier === 'HIGH' ? '#F87171' :
-                                    tier === 'MODERATE' ? '#FB923C' : '#FCD34D'
-                                }; font-weight: 500;">
-                                    ${tier}: ${data.aggregate_tiers[tier] || 0}
-                                </span>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Display merged structures sorted by severity
-            if (data.all_structures_merged && data.all_structures_merged.length > 0) {
-                html += `
-                    <div style="padding: 12px; background: var(--bg-primary); border-radius: 6px; border: 1px solid var(--border);">
-                        <div style="font-weight: 600; color: var(--primary); margin-bottom: 10px; font-size: 13px;">
-                            📊 Body System Impact (Severity Order)
-                        </div>
-                        <div style="display: flex; flex-direction: column; gap: 6px;">
-                            ${data.all_structures_merged.map((struct, idx) => `
-                                <div style="padding: 8px; background: var(--bg-secondary); border-radius: 4px; border-left: 4px solid ${
-                                    struct.criticality === 'CRITICAL' ? '#EF4444' :
-                                    struct.criticality === 'HIGH' ? '#F87171' :
-                                    struct.criticality === 'MODERATE' ? '#FB923C' : '#FCD34D'
-                                };">
-                                    <div style="font-size: 11px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px;">
-                                        ${struct.structure}
-                                    </div>
-                                    <div style="font-size: 10px; color: var(--text-secondary); display: flex; justify-content: space-between; gap: 8px;">
-                                        <span><strong>${struct.new_breaks}</strong>/<span style="opacity: 0.7;">${struct.relations}</span> breaks</span>
-                                        <span style="color: ${
-                                            struct.criticality === 'CRITICAL' ? '#EF4444' :
-                                            struct.criticality === 'HIGH' ? '#F87171' :
-                                            struct.criticality === 'MODERATE' ? '#FB923C' : '#FCD34D'
-                                        }; font-weight: 600;">${struct.criticality}</span>
-                                        <span style="opacity: 0.5; font-size: 9px;">source: ${struct.source}</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            html += '</div>';
-            content.innerHTML = html;
         }
-
         function showError(message) {
             const content = document.getElementById('resultsContent');
-            content.innerHTML = `
-                <div class="placeholder" style="color: var(--error);">
-                    <p><strong>⚠️ Error</strong></p>
-                    <p style="color: var(--text-secondary);">${message}</p>
-                </div>
-            `;
+            content.replaceChildren();
+            const detail = document.createElement('p');
+            detail.textContent = message;
+            content.append(detail);
         }
 
         // Initialize
