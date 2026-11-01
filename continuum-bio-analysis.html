@@ -716,12 +716,26 @@
             // Sort items alphabetically by generic_name
             const sortedItems = [...items].sort((a, b) => a.generic_name.localeCompare(b.generic_name));
             sortedItems.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'section-item' + (selectedCompounds.has(item.generic_name) ? ' selected' : '');
-                div.textContent = item.generic_name;
-                if (containerId !== 'conditionsList') div.onclick = () => toggleItemSelection(item);
-                else div.style.cursor = 'default';
-                container.appendChild(div);
+                const isSelected = selectedCompounds.has(item.generic_name);
+                const row = document.createElement('label');
+                row.className = 'section-item' + (isSelected ? ' selected' : '');
+                row.style.display = 'flex';
+                row.style.alignItems = 'center';
+                row.style.gap = '8px';
+                // Conditions are a reference catalog, not runtime inputs: no checkbox
+                if (containerId !== 'conditionsList') {
+                    const box = document.createElement('input');
+                    box.type = 'checkbox';
+                    box.checked = isSelected;
+                    box.onchange = () => toggleItemSelection(item);
+                    row.appendChild(box);
+                } else {
+                    row.style.cursor = 'default';
+                }
+                const text = document.createElement('span');
+                text.textContent = item.generic_name;
+                row.appendChild(text);
+                container.appendChild(row);
             });
         }
 
@@ -802,8 +816,8 @@
 
         function toggleCompound(name, isSelected) {
             if (isSelected) {
-                if (selectedCompounds.size >= 50) {
-                    alert('Maximum 50 compounds per analysis');
+                if (selectedCompounds.size >= 10) {
+                    alert('Select at most 10 compounds.');
                     return;
                 }
                 selectedCompounds.add(name);
@@ -812,6 +826,7 @@
             }
             updateSelectedDisplay();
             renderCompoundsList();
+            renderSections();
         }
 
         function escapeHTML(value) {
