@@ -839,7 +839,7 @@
             if (ticked) { if (!selectedAilments.has(name)) selectedAilments.set(name, 100); }
             else selectedAilments.delete(name);
             refreshAilmentNote();
-            updateAnalyzeButton();
+            updateSelectedDisplay();
         }
         function setAilmentPercent(name, input) {
             const raw = input.value.trim();
@@ -959,9 +959,9 @@
         }
         function updateSelectedDisplay() {
             const list = document.getElementById('selectedList');
-            document.getElementById('selectionCount').textContent = selectedCompounds.size;
+            document.getElementById('selectionCount').textContent = selectedCompounds.size + selectedAilments.size;
             list.replaceChildren();
-            if (!selectedCompounds.size) list.textContent = 'No compounds selected';
+            if (!selectedCompounds.size && !selectedAilments.size) list.textContent = 'No compounds or ailments selected';
             for (const name of [...selectedCompounds].sort()) {
                 if (!exposures.has(name)) exposures.set(name, {dose:'', interval:'once daily'});
                 const values = exposures.get(name);
@@ -974,6 +974,22 @@
                 remove.textContent = 'Remove';
                 remove.onclick = () => { selectedCompounds.delete(name); updateSelectedDisplay(); renderSections(); };
                 card.append(remove);
+                list.append(card);
+            }
+            // Ticked ailments: shown with their percentage. Display only; not sent to the engine.
+            for (const name of [...selectedAilments.keys()].sort()) {
+                const pct = selectedAilments.get(name);
+                const card = document.createElement('div');
+                card.style.cssText = 'padding:10px; border:1px dashed var(--border); width:100%;';
+                const heading = document.createElement('strong');
+                heading.textContent = name + (pct === '' ? '' : ' (' + pct + '%)');
+                const note = document.createElement('div');
+                note.style.cssText = 'font-size:12px; color:var(--text-secondary); margin-top:4px;';
+                note.textContent = 'Ailment (display only, not sent to the engine)';
+                const remove = document.createElement('button');
+                remove.textContent = 'Remove';
+                remove.onclick = () => { selectedAilments.delete(name); refreshAilmentNote(); updateSelectedDisplay(); renderSections(); };
+                card.append(heading, note, remove);
                 list.append(card);
             }
             updateAnalyzeButton();
