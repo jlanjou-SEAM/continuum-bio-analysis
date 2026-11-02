@@ -757,12 +757,12 @@
                 pct.setAttribute('aria-label', item.generic_name + ' percentage (1 to 100)');
                 pct.style.cssText = 'margin:4px 0 8px 28px; width:130px; padding:6px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
                 pct.style.display = box.checked ? 'block' : 'none';
-                pct.value = box.checked ? selectedAilments.get(item.generic_name) : '';
+                pct.value = box.checked ? String(selectedAilments.get(item.generic_name)) : '';
                 pct.oninput = () => setAilmentPercent(item.generic_name, pct);
                 box.onchange = () => {
                     toggleAilment(item.generic_name, box.checked);
                     pct.style.display = box.checked ? 'block' : 'none';
-                    if (!box.checked) pct.value = '';
+                    pct.value = box.checked ? '100' : '';
                 };
                 wrap.append(row, pct);
                 container.appendChild(wrap);
@@ -771,7 +771,7 @@
 
         // Ailments are tracked for display only; they never enter the analysis request
         function toggleAilment(name, ticked) {
-            if (ticked) { if (!selectedAilments.has(name)) selectedAilments.set(name, ''); }
+            if (ticked) { if (!selectedAilments.has(name)) selectedAilments.set(name, 100); }
             else selectedAilments.delete(name);
             refreshAilmentNote();
             updateAnalyzeButton();
@@ -905,24 +905,38 @@
                 const heading = document.createElement('strong');
                 heading.textContent = name;
                 card.append(heading);
-                for (const [key,title,example] of [
-                    ['dose','Dose per administration','e.g. 40 mg'],
-                    ['interval','Interval','e.g. once daily']
-                ]) {
-                    const label = document.createElement('label');
-                    label.style.cssText = 'display:block; margin-top:8px;';
-                    label.textContent = title;
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.maxLength = 160;
-                    input.placeholder = example;
-                    input.value = values[key];
-                    input.setAttribute('aria-label',name+' '+title);
-                    input.style.cssText = 'display:block; width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
-                    input.oninput = () => { values[key] = input.value; updateAnalyzeButton(); };
-                    label.append(input);
-                    card.append(label);
+                // Dose block (free text) and frequency drop-down. Values are the engine's accepted interval forms.
+                const label = document.createElement('label');
+                label.style.cssText = 'display:block; margin-top:8px;';
+                label.textContent = 'Dose per administration';
+                const dose = document.createElement('input');
+                dose.type = 'text';
+                dose.maxLength = 160;
+                dose.placeholder = 'e.g. 40 mg';
+                dose.value = values.dose;
+                dose.setAttribute('aria-label', name + ' Dose per administration');
+                dose.style.cssText = 'display:block; width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
+                dose.oninput = () => { values.dose = dose.value; updateAnalyzeButton(); };
+                label.append(dose);
+                card.append(label);
+
+                const freqLabel = document.createElement('label');
+                freqLabel.style.cssText = 'display:block; margin-top:8px;';
+                freqLabel.textContent = 'Times per day';
+                const freq = document.createElement('select');
+                freq.setAttribute('aria-label', name + ' Times per day');
+                freq.style.cssText = 'display:block; width:100%; padding:8px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
+                for (const [value, text] of [['once daily','1 time a day'],['twice daily','2 times a day'],['every 8 hours','3 times a day'],['every 6 hours','4 times a day']]) {
+                    const opt = document.createElement('option');
+                    opt.value = value;
+                    opt.textContent = text;
+                    freq.append(opt);
                 }
+                freq.value = values.interval || 'once daily';
+                values.interval = freq.value;
+                freq.onchange = () => { values.interval = freq.value; updateAnalyzeButton(); };
+                freqLabel.append(freq);
+                card.append(freqLabel);
                 const remove = document.createElement('button');
                 remove.textContent = 'Remove';
                 remove.onclick = () => { selectedCompounds.delete(name); updateSelectedDisplay(); renderSections(); };
