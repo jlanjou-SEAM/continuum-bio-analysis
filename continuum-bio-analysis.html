@@ -755,6 +755,7 @@
             note.textContent = selectedAilments.size
                 ? 'Ailments ticked (not sent to the engine): ' + [...selectedAilments].sort().join(', ')
                 : '';
+            updateAnalyzeButton();
         }
 
         function toggleItemSelection(item) {
@@ -853,11 +854,9 @@
             return span.innerHTML;
         }
         function updateAnalyzeButton() {
-            const ready = selectedCompounds.size && [...selectedCompounds].every(name => {
-                const value = exposures.get(name);
-                return value?.dose.trim() && value?.interval.trim();
-            });
-            document.getElementById('analyzeBtn').disabled = !backendReady || analysisRunning || !ready;
+            // Enabled as soon as any checkbox is ticked (compound, pharmaceutical, OTC/supplement, or ailment)
+            const anyTicked = selectedCompounds.size > 0 || selectedAilments.size > 0;
+            document.getElementById('analyzeBtn').disabled = !backendReady || analysisRunning || !anyTicked;
         }
         function updateSelectedDisplay() {
             const list = document.getElementById('selectedList');
@@ -917,7 +916,11 @@
         }
 
         async function runAnalysis() {
-            if (!backendReady || analysisRunning || !selectedCompounds.size) return;
+            if (!backendReady || analysisRunning) return;
+            if (!selectedCompounds.size) {
+                showError('Select at least one compound to run the analysis. Ailments are not sent to the engine.');
+                return;
+            }
             analysisRunning = true;
             updateAnalyzeButton();
             try {
