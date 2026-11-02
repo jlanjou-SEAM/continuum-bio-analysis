@@ -612,7 +612,7 @@
         let backendReady = false;
         let analysisRunning = false;
         const exposures = new Map();
-        const selectedAilments = new Set();
+        const selectedAilments = new Map(); // ailment name -> percentage (1-100) or '' if not entered
         let allConditions = [];
         if (configuredApi) {
             try {
@@ -734,7 +734,6 @@
                 if (containerId === 'conditionsList') {
                     box.checked = selectedAilments.has(item.generic_name);
                     row.className = 'section-item' + (box.checked ? ' selected' : '');
-                    box.onchange = () => toggleAilment(item.generic_name, box.checked);
                 } else {
                     box.checked = isSelected;
                     box.onchange = () => toggleItemSelection(item);
@@ -743,19 +742,54 @@
                 const text = document.createElement('span');
                 text.textContent = item.generic_name;
                 row.appendChild(text);
-                container.appendChild(row);
+                if (containerId !== 'conditionsList') {
+                    container.appendChild(row);
+                    return;
+                }
+                // Ailment row: checkbox, then a 1-100 % entry that appears when ticked
+                const wrap = document.createElement('div');
+                const pct = document.createElement('input');
+                pct.type = 'number';
+                pct.min = '1';
+                pct.max = '100';
+                pct.step = 'any';
+                pct.placeholder = '% (1-100)';
+                pct.setAttribute('aria-label', item.generic_name + ' percentage (1 to 100)');
+                pct.style.cssText = 'margin:4px 0 8px 28px; width:130px; padding:6px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
+                pct.style.display = box.checked ? 'block' : 'none';
+                pct.value = box.checked ? selectedAilments.get(item.generic_name) : '';
+                pct.oninput = () => setAilmentPercent(item.generic_name, pct);
+                box.onchange = () => {
+                    toggleAilment(item.generic_name, box.checked);
+                    pct.style.display = box.checked ? 'block' : 'none';
+                    if (!box.checked) pct.value = '';
+                };
+                wrap.append(row, pct);
+                container.appendChild(wrap);
             });
         }
 
         // Ailments are tracked for display only; they never enter the analysis request
         function toggleAilment(name, ticked) {
-            if (ticked) selectedAilments.add(name);
+            if (ticked) { if (!selectedAilments.has(name)) selectedAilments.set(name, ''); }
             else selectedAilments.delete(name);
-            const note = document.getElementById('ailmentSelection');
-            note.textContent = selectedAilments.size
-                ? 'Ailments ticked (not sent to the engine): ' + [...selectedAilments].sort().join(', ')
-                : '';
+            refreshAilmentNote();
             updateAnalyzeButton();
+        }
+        function setAilmentPercent(name, input) {
+            const raw = input.value.trim();
+            const n = Number(raw);
+            const valid = raw !== '' && Number.isFinite(n) && n >= 1 && n <= 100;
+            input.style.borderColor = raw === '' || valid ? 'var(--border)' : 'var(--error)';
+            if (selectedAilments.has(name)) selectedAilments.set(name, valid ? n : '');
+            refreshAilmentNote();
+        }
+        function refreshAilmentNote() {
+            const note = document.getElementById('ailmentSelection');
+            const names = [...selectedAilments.keys()].sort();
+            note.textContent = names.length
+                ? 'Ailments ticked (not sent to the engine): ' + names.map(n => selectedAilments.get(n) === '' ? n : `${n} (${selectedAilments.get(n)}%)`).join(', ')
+                : '';
         }
 
         function toggleItemSelection(item) {
@@ -1002,7 +1036,7 @@
                     const ailmentBox = document.createElement('div');
                     ailmentBox.style.cssText = 'padding:10px; margin-top:8px; border:1px dashed var(--border);';
                     ailmentBox.append(Object.assign(document.createElement('strong'), {textContent: 'Ticked ailments: structure lookup'}));
-                    for (const name of [...selectedAilments].sort()) {
+                    for (const name of [...selectedAilments.keys()].sort()) {
                         const targets = allConditions.find(c => c.generic_name === name)?.target_structures || [];
                         const heading = document.createElement('p');
                         heading.textContent = `${name}: ${targets.length} defined target structure(s)`;
