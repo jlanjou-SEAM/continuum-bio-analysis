@@ -724,15 +724,36 @@
             const label = document.createElement('label');
             label.style.cssText = 'display:block; margin-top:6px;';
             label.textContent = 'Dose per administration';
-            const dose = document.createElement('input');
-            dose.type = 'text';
-            dose.maxLength = 160;
-            dose.placeholder = 'e.g. 40 mg';
-            dose.value = values.dose;
-            dose.setAttribute('aria-label', name + ' Dose per administration');
-            dose.style.cssText = 'display:block; width:100%; padding:6px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
-            dose.oninput = () => { values.dose = dose.value; updateAnalyzeButton(); };
-            label.append(dose);
+            const row = document.createElement('div');
+            row.style.cssText = 'display:flex; gap:6px;';
+            const amount = document.createElement('input');
+            amount.type = 'number';
+            amount.min = '0';
+            amount.step = 'any';
+            amount.placeholder = 'e.g. 40';
+            amount.setAttribute('aria-label', name + ' Dose amount');
+            amount.style.cssText = 'flex:1; min-width:0; padding:6px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
+            const unit = document.createElement('select');
+            unit.setAttribute('aria-label', name + ' Dose unit');
+            unit.style.cssText = 'padding:6px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
+            for (const u of ['mg','mcg','g','ng']) {
+                const opt = document.createElement('option');
+                opt.value = u;
+                opt.textContent = u;
+                unit.append(opt);
+            }
+            const parts = String(values.dose || '').trim().match(/^([0-9]+(?:\.[0-9]+)?)\s*(mg|mcg|g|ng)$/i);
+            amount.value = parts ? parts[1] : '';
+            unit.value = parts ? parts[2].toLowerCase() : 'mg';
+            const syncDose = () => {
+                const n = amount.value.trim();
+                values.dose = n ? n + ' ' + unit.value : '';
+                updateAnalyzeButton();
+            };
+            amount.oninput = syncDose;
+            unit.onchange = syncDose;
+            row.append(amount, unit);
+            label.append(row);
             const freqLabel = document.createElement('label');
             freqLabel.style.cssText = 'display:block; margin-top:6px;';
             freqLabel.textContent = 'Times per day';
