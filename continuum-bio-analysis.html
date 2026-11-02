@@ -736,18 +736,19 @@
             const unit = document.createElement('select');
             unit.setAttribute('aria-label', name + ' Dose unit');
             unit.style.cssText = 'padding:6px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);';
-            for (const u of ['mg','mcg','g','ng']) {
+            for (const u of ['mg','cc']) {
                 const opt = document.createElement('option');
                 opt.value = u;
                 opt.textContent = u;
                 unit.append(opt);
             }
-            const parts = String(values.dose || '').trim().match(/^([0-9]+(?:\.[0-9]+)?)\s*(mg|mcg|g|ng)$/i);
+            const parts = String(values.dose || '').trim().match(/^([0-9]+(?:\.[0-9]+)?)\s*(mg|cc)$/i);
             amount.value = parts ? parts[1] : '';
             unit.value = parts ? parts[2].toLowerCase() : 'mg';
             const syncDose = () => {
                 const n = amount.value.trim();
                 values.dose = n ? n + ' ' + unit.value : '';
+                values.unit = unit.value;
                 updateAnalyzeButton();
             };
             amount.oninput = syncDose;
@@ -1009,6 +1010,8 @@
                     const input = exposures.get(name);
                     if (!item || !input?.dose.trim() || !input?.interval.trim())
                         throw new Error('Each compound requires a dose and interval.');
+                    if (input.unit === 'cc')
+                        throw new Error('cc doses need the product concentration (mg per cc). The engine accepts mg only for now.');
                     return {compound:item.chemical_formula, dose:input.dose, interval:input.interval};
                 });
                 showLoading();
