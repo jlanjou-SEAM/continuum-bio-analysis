@@ -988,6 +988,21 @@
                     escapeHTML(counts.rows_with_relation_transition)+' · <strong>Rows with new breaks:</strong> '+
                     escapeHTML(counts.rows_with_new_breaks)+' · <strong>Rows with restorations:</strong> '+
                     escapeHTML(counts.rows_with_restoration)+'</p>';
+                // Ticked ailments: match each to the engine row whose source_term is that ailment (display only)
+                if (selectedAilments.size) {
+                    const ailmentBox = document.createElement('div');
+                    ailmentBox.style.cssText = 'padding:10px; margin-top:8px; border:1px dashed var(--border);';
+                    ailmentBox.append(Object.assign(document.createElement('strong'), {textContent: 'Ticked ailments'}));
+                    for (const name of [...selectedAilments].sort()) {
+                        const match = result.all_rows.find(x => String(x.source_term).toLowerCase() === name.toLowerCase());
+                        const line = document.createElement('p');
+                        line.textContent = match
+                            ? `${name}: ${match.structure} · ${match.new_breaks}/${match.constitutive_relation_count} · ${match.criticality} · ${match.direction} (${match.baseline_id})`
+                            : `${name}: no matching engine condition row yet`;
+                        ailmentBox.append(line);
+                    }
+                    panel.append(ailmentBox);
+                }
                 const effects = [...result.primary_effects,...result.secondary_effects];
                 if (!effects.length) panel.append(document.createTextNode('No active structural transitions for these inputs.'));
                 for (const row of effects) {
