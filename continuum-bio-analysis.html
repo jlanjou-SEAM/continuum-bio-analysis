@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="seam-bio-api" content="https://submit-liked-wise-weddings.trycloudflare.com">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Continuum Bio Analysis</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2563eb;
@@ -555,7 +553,7 @@
                 <div class="left-panel-footer">
                     <button class="btn btn-secondary" onclick="clearSelection()">Clear</button>
                     <button class="btn btn-primary" id="analyzeBtn" onclick="runAnalysis()" disabled>
-                        Run Analysis
+                        Look Up Results
                     </button>
                 </div>
             </div>
@@ -604,24 +602,55 @@
     </div>
 
     <script>
-        // A public page must never assume the visitor runs the analysis server.
-        const configuredApi = new URLSearchParams(location.search).get('api') ||
-            document.querySelector('meta[name="seam-bio-api"]').content;
-        const localPage = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
-        let API_URL = localPage ? 'http://localhost:5000' : '';
+        const LOOKUP_ROOT = new URL('./public/bio-lookup/', location.href);
+        let lookupIndex = null;
         let backendReady = false;
         let analysisRunning = false;
         const exposures = new Map();
-        const selectedAilments = new Map(); // ailment name -> percentage (1-100) or '' if not entered
+        const selectedAilments = new Map();
         let allConditions = [];
-        if (configuredApi) {
-            try {
-                const url = new URL(configuredApi);
-                if (url.protocol !== 'https:' && !(localPage && url.protocol === 'http:')) {
-                    throw new Error('The public analysis service requires HTTPS.');
-                }
-                API_URL = url.href.replace(/\/$/, '');
-            } catch (e) { console.error('Invalid analysis service address:', e.message); }
+        function lookupKey(input) {
+            const match = String(input.dose).trim().match(/^([0-9]+(?:\.[0-9]+)?)\s*mg$/i);
+            const dose = match ? Number(match[1]) + ' mg' : String(input.dose).trim();
+            return JSON.stringify([input.compound, dose, input.interval.trim().toLowerCase()]);
+        }
+        function renderLookupStatus() {
+            let box = document.getElementById('lookupStatus');
+            if (!box) {
+                box = document.createElement('div');
+                box.id = 'lookupStatus';
+                box.style.cssText = 'padding:12px;margin-bottom:12px;background:#eef5fa;color:#172033;border-radius:8px;';
+                const results = document.getElementById('resultsContent');
+                results.parentNode.insertBefore(box, results);
+            }
+            box.replaceChildren();
+            const stamp = new Date(lookupIndex.generated_utc);
+            const stale = !Number.isFinite(stamp.getTime()) || Date.now()-stamp.getTime()>24*3600000;
+            const detail = document.createElement('p');
+            detail.textContent = `GitHub lookup · ${lookupIndex.cases.length} published combinations · Generated ${stamp.toLocaleString()}${stale ? ' · Refresh overdue; showing last published results' : ''}. Retained reference snapshot; examples are not dosing recommendations.`;
+            box.append(detail);
+            const choices = document.createElement('details');
+            choices.open = true;
+            choices.append(Object.assign(document.createElement('summary'), {textContent:'Available published combinations'}));
+            for (const entry of lookupIndex.cases) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.style.cssText = 'display:block;margin:6px 0;padding:6px;background:white;color:#172033;border:1px solid #64748b;cursor:pointer;';
+                button.textContent = `${entry.label} · ${entry.dose} · ${entry.interval}`;
+                button.onclick = async () => {
+                    if (analysisRunning) return;
+                    const compound = allCompounds.find(c => c.generic_name===entry.label && c.chemical_formula===entry.compound);
+                    if (!compound) { showError('Published compound is missing from the catalog.'); return; }
+                    selectedCompounds.clear();
+                    selectedCompounds.add(compound.generic_name);
+                    exposures.set(compound.generic_name, {dose:entry.dose, interval:entry.interval});
+                    await renderSections();
+                    updateSelectedDisplay();
+                    await runAnalysis();
+                };
+                choices.append(button);
+            }
+            box.append(choices);
         }
         async function readJSON(url) {
             // Polls can be slow while the engine is busy; allow 30 s per request
@@ -633,7 +662,7 @@
             const content = document.getElementById('resultsContent');
             content.replaceChildren();
             const heading = document.createElement('h3');
-            heading.textContent = 'Analysis service unavailable';
+            heading.textContent = 'Published lookup unavailable';
             const detail = document.createElement('p');
             detail.textContent = message;
             content.append(heading, detail);
@@ -657,23 +686,18 @@
                 showError(`Unable to load the public catalog: ${e.message}`);
                 return;
             }
-            if (!API_URL) {
-                showServiceNotice('The compound and condition catalogs are available. Online analysis needs a hosted analysis service; no service address is configured for this site.');
-                updateSelectedDisplay();
-                return;
-            }
             try {
-                const health = await readJSON(`${API_URL}/health`);
-                if (health.status !== 'ok' || health.runtime_configured !== true || health.runner_available !== true || health.result_schema !== 'SEAM_BIO_NATIVE_RESULTS_V1') {
-                    throw new Error('The analysis service is not ready.');
+                lookupIndex = await readJSON(new URL('index.json?t='+Date.now(), LOOKUP_ROOT));
+                if (lookupIndex.schema !== 'SEAM_BIO_LOOKUP_V1' || !Array.isArray(lookupIndex.cases) || !lookupIndex.cases.length) {
+                    throw new Error('No compatible published lookup index.');
                 }
                 backendReady = true;
-                document.getElementById('resultsContent').textContent = 'Select a compound and enter its dose and interval. Each compound is evaluated independently against the retained reference snapshot.';
-                updateSelectedDisplay();
+                renderLookupStatus();
+                document.getElementById('resultsContent').textContent = 'Choose a published combination above, or enter inputs for an exact lookup. Results are generated by the private engine in GitHub Actions. Unpublished inputs return no result.';
             } catch (e) {
-                showServiceNotice('The catalog is available, but the configured analysis service is not responding or its runtime is unavailable.');
-                updateSelectedDisplay();
+                showServiceNotice('The catalog is available, but the GitHub lookup dataset could not be loaded: '+e.message);
             }
+            updateSelectedDisplay();
         }
 
         function toggleSection(section) {
@@ -1029,22 +1053,23 @@
                     return {compound:item.chemical_formula, dose:input.dose, interval:input.interval};
                 });
                 showLoading();
-                const response = await fetch(API_URL+'/analyze', {
-                    method:'POST', headers:{'Content-Type':'application/json'},
-                    signal:AbortSignal.timeout(15000), body:JSON.stringify({compounds})
+                const entries = compounds.map(input => {
+                    const entry = lookupIndex.cases.find(c => lookupKey(c)===lookupKey(input));
+                    if (!entry) throw new Error(`No published result for ${input.compound}, ${input.dose}, ${input.interval}. Choose an available combination; doses are never substituted.`);
+                    return entry;
                 });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || ('HTTP '+response.status));
-                if (!data.task_id) throw new Error('The service returned no task identifier.');
-                const deadline = Date.now()+660000;
-                while (Date.now()<deadline) {
-                    await new Promise(resolve => setTimeout(resolve,1000));
-                    const task = await readJSON(API_URL+'/results/'+encodeURIComponent(data.task_id));
-                    if (task.status==='completed') { displayResults(task.result); return; }
-                    if (['failed','cancelled'].includes(task.status)) throw new Error(task.error || task.status);
-                    updateProgress(task.progress || 0);
+                const results = [];
+                for (const entry of entries) {
+                    if (!/^[a-z0-9][a-z0-9_-]*\.json$/.test(entry.file)) throw new Error('Invalid published result path.');
+                    const data = await readJSON(new URL(entry.file+'?v='+encodeURIComponent(lookupIndex.generated_utc), LOOKUP_ROOT));
+                    if (data.schema!=='SEAM_BIO_NATIVE_RESULTS_V1' || !Array.isArray(data.results) || data.results.length!==1 ||
+                        !data.lookup_input || lookupKey(data.lookup_input)!==lookupKey(entry) ||
+                        data.source_revision!==lookupIndex.source_revision || data.generated_utc!==lookupIndex.generated_utc)
+                        throw new Error('Published result does not match the lookup index. Please refresh.');
+                    results.push(data.results[0]);
                 }
-                throw new Error('Analysis timed out; no completed result was received.');
+                displayResults({schema:'SEAM_BIO_NATIVE_RESULTS_V1', results});
+
             } catch (error) {
                 showError('Analysis failed: '+error.message);
             } finally {
@@ -1058,7 +1083,7 @@
             content.innerHTML = `
                 <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                     <div class="spinner"></div>
-                    <p style="margin-top: 16px; color: var(--text-secondary);">Analyzing...</p>
+                    <p style="margin-top: 16px; color: var(--text-secondary);">Loading published results...</p>
                     <div class="progress-bar" style="width: 200px; margin-top: 16px;">
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
@@ -1081,7 +1106,7 @@
                 !data.results.length || data.results.some(r => r.complete!==true || r.all_rows?.length!==5734))
                 throw new Error('Incomplete or incompatible engine result.');
             const content = document.getElementById('resultsContent');
-            content.innerHTML = '<p>Retained reference snapshot · Independent compound runs</p>';
+            content.innerHTML = '<p>Published GitHub results · Retained reference snapshot · Independent compound runs</p>';
             for (const result of data.results) {
                 const panel = document.createElement('section');
                 panel.style.cssText = 'padding:16px; margin-bottom:16px; background:var(--bg-primary); border:1px solid var(--border);';
