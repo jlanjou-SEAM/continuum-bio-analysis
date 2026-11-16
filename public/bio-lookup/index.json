@@ -1,6 +1,6 @@
 {
   "schema": "SEAM_BIO_LOOKUP_V1",
-  "generated_utc": "2026-11-15T18:58:47.233572+00:00",
+  "generated_utc": "2026-11-16T06:49:29.465909+00:00",
   "source_revision": "e4ec260333c54ef697278993f0475d2419d456a6",
   "reference_mode": "retained_locked_snapshot",
   "batch_mode": "independent_compound_runs",
