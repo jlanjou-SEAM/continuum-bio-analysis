@@ -672,7 +672,27 @@
         let categories = new Set();
         let selectedCategory = 'All';
 
+        async function loadRepositoryViews() {
+            const counter = document.createElement('p');
+            counter.id = 'repositoryViews';
+            counter.style.cssText = 'padding:10px;text-align:center;background:#eef5fa;color:#172033;font-size:13px;';
+            counter.textContent = 'Repository views (last 14 days): loading…';
+            document.body.append(counter);
+            try {
+                const data = await readJSON('./public/repository-views.json');
+                if (data.schema !== 'REPOSITORY_VIEWS_V1' || !Number.isSafeInteger(data.views) || data.views < 0 || data.window_days !== 14)
+                    throw new Error('Invalid counter data');
+                const stamp = new Date(data.updated_utc);
+                if (!Number.isFinite(stamp.getTime())) throw new Error('Invalid update time');
+                counter.textContent = `Repository views (last 14 days): ${data.views.toLocaleString()} · Updated ${stamp.toLocaleString()}${Date.now()-stamp.getTime()>86400000 ? ' · Update delayed' : ''}`;
+                counter.title = 'Relative interest in the GitHub repository; not live-site visits or submissions. Loaded once when this page opens.';
+            } catch (_) {
+                counter.textContent = 'Repository views (last 14 days): unavailable';
+            }
+        }
+
         async function init() {
+            loadRepositoryViews();
             try {
                 const catalog = await readJSON('./SEAM_common_drugs_supplements_choice_registry_v1.json');
                 allCompounds = catalog.compounds || [];
